@@ -1,0 +1,111 @@
+[
+  {
+    "id": "g1",
+    "name": "AI Open Innovation Challenge",
+    "priority": 1,
+    "estimatedFunding": "Up to $500,000",
+    "supportPercentage": "70%",
+    "description": "Support businesses developing or adopting AI solutions to solve real-world problems.",
+    "tags": ["Artificial Intelligence", "Innovation", "Technology"],
+    "conditions": [
+      {
+        "field": "businessStage",
+        "operator": "not_equals",
+        "value": "Idea Stage",
+        "expectedMessage": "Company is past the Idea stage"
+      },
+      {
+        "field": "dynamicAnswers.aiInvestment",
+        "operator": "exists",
+        "value": "",
+        "expectedMessage": "Company has estimated AI investment"
+      }
+    ]
+  },
+  {
+    "id": "g2",
+    "name": "Capability Transfer Programme (CTP)",
+    "priority": 2,
+    "estimatedFunding": "Up to $100,000",
+    "supportPercentage": "50%",
+    "description": "Help companies improve business capabilities through expert knowledge transfer from foreign/local specialists.",
+    "tags": ["Training", "Knowledge Transfer", "Capability"],
+    "conditions": [
+      {
+        "field": "employees",
+        "operator": "greater_than",
+        "value": 2,
+        "expectedMessage": "Company has more than 2 employees"
+      },
+      {
+        "field": "annualRevenue",
+        "operator": "greater_than",
+        "value": 50000,
+        "expectedMessage": "Minimum revenue requirements met"
+      }
+    ]
+  },
+  {
+    "id": "g3",
+    "name": "Chief Technology Officer-as-a-Service (CTO-as-a-Service)",
+    "priority": 1,
+    "estimatedFunding": "Subsidised Consultants",
+    "supportPercentage": "70%",
+    "description": "Support SMEs that need strategic technology leadership and digital transformation planning.",
+    "tags": ["Digital Transformation", "Consultancy", "Leadership"],
+    "conditions": [
+      {
+        "field": "annualRevenue",
+        "operator": "less_than",
+        "value": 50000000,
+        "expectedMessage": "Company revenue is within SME limits"
+      },
+      {
+        "field": "country",
+        "operator": "equals",
+        "value": "Singapore",
+        "expectedMessage": "Company is based in Singapore"
+      }
+    ]
+  },
+  {
+    "id": "g4",
+    "name": "Career Conversion Programme (CCP)",
+    "priority": 3,
+    "estimatedFunding": "Salary Support",
+    "supportPercentage": "Up to 90%",
+    "description": "Support hiring and workforce transformation for mid-career individuals.",
+    "tags": ["Hiring", "Workforce", "Salary Support"],
+    "conditions": [
+      {
+        "field": "dynamicAnswers.hiringType",
+        "operator": "exists",
+        "value": "",
+        "expectedMessage": "Company is hiring roles"
+      }
+    ]
+  },
+  {
+    "id": "g5",
+    "name": "Productivity Solutions Grant (PSG)",
+    "priority": 2,
+    "estimatedFunding": "Up to $30,000",
+    "supportPercentage": "50%",
+    "description": "Support companies in the adoption of IT solutions and equipment to enhance business processes.",
+    "tags": ["Productivity", "Equipment", "Digital"],
+    "conditions": [
+      {
+        "field": "yearsInBusiness",
+        "operator": "greater_than",
+        "value": 1,
+        "expectedMessage": "Company has been operating for over 1 year"
+      },
+      {
+        "field": "dynamicAnswers.equipmentProductivity",
+        "operator": "equals",
+        "value": "Yes",
+        "expectedMessage": "Equipment will improve productivity"
+      }
+    ]
+  }
+]

@@ -1,0 +1,210 @@
+[
+  {
+    "id": "q1",
+    "label": "Do you manufacture physical products?",
+    "type": "dropdown",
+    "options": ["Yes", "No"],
+    "required": true,
+    "fieldKey": "manufacturesProducts",
+    "condition": {
+      "field": "industry",
+      "operator": "equals",
+      "value": "Manufacturing"
+    }
+  },
+  {
+    "id": "q2",
+    "label": "Do you export products?",
+    "type": "dropdown",
+    "options": ["Yes", "No"],
+    "required": true,
+    "fieldKey": "exportProducts",
+    "condition": {
+      "field": "industry",
+      "operator": "equals",
+      "value": "Manufacturing"
+    }
+  },
+  {
+    "id": "q3",
+    "label": "Do you own a manufacturing facility?",
+    "type": "dropdown",
+    "options": ["Yes", "No"],
+    "required": true,
+    "fieldKey": "ownsFacility",
+    "condition": {
+      "field": "industry",
+      "operator": "equals",
+      "value": "Manufacturing"
+    }
+  },
+  {
+    "id": "q4",
+    "label": "Are your products locally manufactured?",
+    "type": "dropdown",
+    "options": ["Yes", "No"],
+    "required": true,
+    "fieldKey": "locallyManufactured",
+    "condition": {
+      "field": "industry",
+      "operator": "equals",
+      "value": "Manufacturing"
+    }
+  },
+  {
+    "id": "q5",
+    "label": "Do you develop software?",
+    "type": "dropdown",
+    "options": ["Yes", "No"],
+    "required": true,
+    "fieldKey": "developsSoftware",
+    "condition": {
+      "field": "industry",
+      "operator": "equals",
+      "value": "Technology / SaaS"
+    }
+  },
+  {
+    "id": "q6",
+    "label": "Do you use Artificial Intelligence?",
+    "type": "dropdown",
+    "options": ["Yes", "No"],
+    "required": true,
+    "fieldKey": "usesAI",
+    "condition": {
+      "field": "industry",
+      "operator": "equals",
+      "value": "Technology / SaaS"
+    }
+  },
+  {
+    "id": "q7",
+    "label": "Is your product already launched?",
+    "type": "dropdown",
+    "options": ["Yes", "No"],
+    "required": true,
+    "fieldKey": "isLaunched",
+    "condition": {
+      "field": "industry",
+      "operator": "equals",
+      "value": "Technology / SaaS"
+    }
+  },
+  {
+    "id": "q8",
+    "label": "Is your product B2B or B2C?",
+    "type": "dropdown",
+    "options": ["B2B", "B2C", "Both"],
+    "required": true,
+    "fieldKey": "b2bOrB2c",
+    "condition": {
+      "field": "industry",
+      "operator": "equals",
+      "value": "Technology / SaaS"
+    }
+  },
+  {
+    "id": "q9",
+    "label": "Are you developing a healthcare product?",
+    "type": "dropdown",
+    "options": ["Yes", "No"],
+    "required": true,
+    "fieldKey": "healthcareProduct",
+    "condition": {
+      "field": "industry",
+      "operator": "equals",
+      "value": "Healthcare"
+    }
+  },
+  {
+    "id": "q10",
+    "label": "Is your company medically regulated?",
+    "type": "dropdown",
+    "options": ["Yes", "No"],
+    "required": true,
+    "fieldKey": "medicallyRegulated",
+    "condition": {
+      "field": "industry",
+      "operator": "equals",
+      "value": "Healthcare"
+    }
+  },
+  {
+    "id": "q11",
+    "label": "Are you involved in farming?",
+    "type": "dropdown",
+    "options": ["Yes", "No"],
+    "required": true,
+    "fieldKey": "involvedInFarming",
+    "condition": {
+      "field": "industry",
+      "operator": "equals",
+      "value": "Agriculture"
+    }
+  },
+  {
+    "id": "q12",
+    "label": "Do you use sustainable farming practices?",
+    "type": "dropdown",
+    "options": ["Yes", "No"],
+    "required": true,
+    "fieldKey": "sustainableFarming",
+    "condition": {
+      "field": "industry",
+      "operator": "equals",
+      "value": "Agriculture"
+    }
+  },
+  {
+    "id": "q13",
+    "label": "Does your company work in Solar?",
+    "type": "dropdown",
+    "options": ["Yes", "No"],
+    "required": true,
+    "fieldKey": "worksInSolar",
+    "condition": {
+      "field": "industry",
+      "operator": "equals",
+      "value": "Renewable Energy"
+    }
+  },
+  {
+    "id": "q14",
+    "label": "Wind?",
+    "type": "dropdown",
+    "options": ["Yes", "No"],
+    "required": true,
+    "fieldKey": "worksInWind",
+    "condition": {
+      "field": "industry",
+      "operator": "equals",
+      "value": "Renewable Energy"
+    }
+  },
+  {
+    "id": "q15",
+    "label": "Battery?",
+    "type": "dropdown",
+    "options": ["Yes", "No"],
+    "required": true,
+    "fieldKey": "worksInBattery",
+    "condition": {
+      "field": "industry",
+      "operator": "equals",
+      "value": "Renewable Energy"
+    }
+  },
+  {
+    "id": "q16",
+    "label": "Carbon reduction?",
+    "type": "dropdown",
+    "options": ["Yes", "No"],
+    "required": true,
+    "fieldKey": "carbonReduction",
+    "condition": {
+      "field": "industry",
+      "operator": "equals",
+      "value": "Renewable Energy"
+    }
+  }
+]
