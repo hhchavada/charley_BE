@@ -1,0 +1,191 @@
+openapi: 3.0.0
+info:
+  title: Grant Engine V2 API
+  version: 2.0.0
+  description: End-to-end integration and admin configuration layer for the Grant Assessment Engine.
+servers:
+  - url: /v2
+paths:
+  /assessment/start:
+    post:
+      summary: Start a new assessment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: string
+                versionId:
+                  type: string
+              required:
+                - userId
+      responses:
+        '201':
+          description: Assessment Session created
+  
+  /assessment/{sessionId}/answer:
+    post:
+      summary: Submit partial answers
+      parameters:
+        - in: path
+          name: sessionId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                answers:
+                  type: object
+              required:
+                - answers
+      responses:
+        '200':
+          description: Answers merged successfully
+        '409':
+          description: Optimistic lock conflict
+
+  /assessment/{sessionId}/evaluate:
+    post:
+      summary: Run the Grant Engine evaluation pipeline
+      parameters:
+        - in: path
+          name: sessionId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Evaluation completed successfully
+          
+  /assessment/{sessionId}:
+    get:
+      summary: Get current assessment state
+      parameters:
+        - in: path
+          name: sessionId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Returns the full AssessmentResponse DTO
+
+  /admin/publish:
+    post:
+      summary: Publish the current Draft configuration
+      responses:
+        '200':
+          description: Draft published successfully
+        '400':
+          description: Validation failed (broken references, missing questions, etc.)
+
+  /admin/rollback:
+    post:
+      summary: Rollback to a previous configuration version
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                targetVersionId:
+                  type: string
+                reason:
+                  type: string
+      responses:
+        '200':
+          description: Rolled back successfully
+
+  /admin/impact:
+    get:
+      summary: Analyze the impact of publishing the current Draft
+      responses:
+        '200':
+          description: Returns ImpactAnalysis report
+
+  /admin/simulate:
+    post:
+      summary: Run a stateless simulation against a specific configuration version
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                payload:
+                  type: object
+                configVersionId:
+                  type: string
+      responses:
+        '200':
+          description: Returns AssessmentResponse + Explanations + DecisionTrace
+
+  /admin/simulate/compare:
+    post:
+      summary: Compare two simulation scenarios
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                scenarioA:
+                  type: object
+                  properties:
+                    payload:
+                      type: object
+                    configVersionId:
+                      type: string
+                scenarioB:
+                  type: object
+                  properties:
+                    payload:
+                      type: object
+                    configVersionId:
+                      type: string
+      responses:
+        '200':
+          description: Returns the ScenarioDiff (lost grants, funding difference, etc)
+
+  /analytics/dashboard:
+    get:
+      summary: Get aggregated analytics dashboard metrics
+      parameters:
+        - in: query
+          name: versionId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Returns Dashboard DTO with Funnels and Performance
+
+  /analytics/export:
+    get:
+      summary: Export analytics data as CSV/JSON
+      parameters:
+        - in: query
+          name: versionId
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: format
+          required: true
+          schema:
+            type: string
+            enum: [csv, json, excel]
+      responses:
+        '200':
+          description: Raw file download

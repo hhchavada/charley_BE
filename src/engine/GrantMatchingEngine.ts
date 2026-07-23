@@ -1,4 +1,6 @@
-import { CompanyData, Grant, MatchResult, Rule, RuleResult, Operator } from '../types';
+import { CompanyData, Grant, MatchResult, RuleResult } from '../types';
+import { RuleEngine } from './RuleEngine';
+import { ResultBuilder } from './ResultBuilder';
 import fs from 'fs';
 import path from 'path';
 
@@ -12,97 +14,57 @@ export class GrantMatchingEngine {
   }
 
   public match(company: CompanyData): MatchResult[] {
-    return this.grants.map(grant => this.evaluateGrant(grant, company));
+    // Memoize field lookups for this matching cycle to optimize performance for 200+ grants
+    const fieldCache = new Map<string, any>();
+    
+    return this.grants.map(grant => this.evaluateGrant(grant, company, fieldCache));
   }
 
-  private evaluateGrant(grant: Grant, company: CompanyData): MatchResult {
-    let qualified = true;
-    let missingInfo = false;
-    const ruleResults: RuleResult[] = [];
+  private evaluateGrant(grant: Grant, company: CompanyData, fieldCache: Map<string, any>): MatchResult {
+    const matchedRules: RuleResult[] = [];
+    const failedRules: RuleResult[] = [];
+    const missingRules: RuleResult[] = [];
 
     for (const rule of grant.conditions) {
       const { field, operator, value } = rule;
-      const actualValue = this.getFieldValue(company, field);
+      
+      let actualValue;
+      if (fieldCache.has(field)) {
+        actualValue = fieldCache.get(field);
+      } else {
+        actualValue = RuleEngine.getFieldValue(company, field);
+        fieldCache.set(field, actualValue);
+      }
+
+      const result: RuleResult = {
+        ruleId: rule.id || `rule_${field}_${operator}`,
+        ruleName: rule.name || `Rule for ${field}`,
+        field,
+        operator,
+        expectedValue: value,
+        actualValue,
+        status: 'FAIL' // Default, overridden below
+      };
+
+
 
       if (actualValue === undefined || actualValue === null || actualValue === '') {
-        missingInfo = true;
-        ruleResults.push({
-          rule,
-          status: 'Missing',
-          message: `${this.formatField(field)} information missing`
-        });
+        result.status = 'MISSING_DATA';
+        missingRules.push(result);
         continue;
       }
 
-      const passed = this.evaluateRule(operator, value, actualValue);
-
+      const passed = RuleEngine.evaluate(operator, value, actualValue);
+      result.status = passed ? 'PASS' : 'FAIL';
+      
       if (passed) {
-        ruleResults.push({
-          rule,
-          status: 'Matched',
-          message: `${this.formatField(field)} matched`
-        });
+        matchedRules.push(result);
       } else {
-        qualified = false;
-        ruleResults.push({
-          rule,
-          status: 'Rejected',
-          message: `${this.formatField(field)} requirement not met (Expected ${value})`
-        });
+        failedRules.push(result);
       }
     }
 
-    let status: MatchResult['status'];
-    if (!qualified) {
-      status = 'Not Qualified';
-    } else if (missingInfo) {
-      status = 'Needs More Information';
-    } else {
-      status = 'Qualified';
-    }
-
-    return {
-      grant,
-      status,
-      ruleResults
-    };
-  }
-
-  private formatField(field: string): string {
-    const parts = field.split('.');
-    const lastPart = parts[parts.length - 1];
-    return lastPart.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase());
-  }
-
-  private getFieldValue(company: CompanyData, fieldPath: string): any {
-    const parts = fieldPath.split('.');
-    let current: any = company;
-    for (const part of parts) {
-      if (current === undefined || current === null) return undefined;
-      current = current[part];
-    }
-    return current;
-  }
-
-  private evaluateRule(operator: Operator, expected: any, actual: any): boolean {
-    switch (operator) {
-      case 'equals':
-        return String(actual).toLowerCase() === String(expected).toLowerCase();
-      case 'not_equals':
-        return String(actual).toLowerCase() !== String(expected).toLowerCase();
-      case 'greater_than':
-        return Number(actual) > Number(expected);
-      case 'less_than':
-        return Number(actual) < Number(expected);
-      case 'contains':
-        if (Array.isArray(actual)) {
-          return actual.some(a => String(a).toLowerCase() === String(expected).toLowerCase());
-        }
-        return String(actual).toLowerCase().includes(String(expected).toLowerCase());
-      case 'exists':
-        return actual !== undefined && actual !== null && actual !== '';
-      default:
-        return false;
-    }
+    return ResultBuilder.build(grant, matchedRules, failedRules, missingRules);
   }
 }
+

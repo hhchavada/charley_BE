@@ -1,210 +1,635 @@
 [
   {
-    "id": "q1",
-    "label": "Do you manufacture physical products?",
-    "type": "dropdown",
-    "options": ["Yes", "No"],
+    "id": "q-overseas-expansion",
+    "step": 1,
+    "title": "Are you planning overseas expansion?",
+    "type": "radio",
+    "fieldName": "dynamicAnswers.planningOverseas",
+    "options": [
+      "Yes",
+      "No"
+    ],
     "required": true,
-    "fieldKey": "manufacturesProducts",
-    "condition": {
-      "field": "industry",
-      "operator": "equals",
-      "value": "Manufacturing"
+    "followUpQuestions": [
+      {
+        "id": "q-target-market",
+        "step": 2,
+        "title": "Which markets are you targeting?",
+        "type": "text",
+        "fieldName": "dynamicAnswers.targetMarket",
+        "required": true,
+        "conditions": [
+          {
+            "field": "dynamicAnswers.planningOverseas",
+            "operator": "equals",
+            "value": "Yes"
+          }
+        ],
+        "followUpQuestions": [
+          {
+            "id": "q-new-market",
+            "step": 3,
+            "title": "Is this a new market for your company?",
+            "type": "radio",
+            "fieldName": "dynamicAnswers.newMarket",
+            "options": [
+              "Yes",
+              "No"
+            ],
+            "required": true
+          },
+          {
+            "id": "q-overseas-sales",
+            "step": 3,
+            "title": "What are your current overseas sales in this market?",
+            "type": "number",
+            "fieldName": "dynamicAnswers.overseasSales",
+            "required": true
+          },
+          {
+            "id": "q-mra-activity",
+            "step": 4,
+            "title": "What type of overseas activity are you planning?",
+            "type": "radio",
+            "fieldName": "dynamicAnswers.mraActivityType",
+            "options": [
+              "Promotion",
+              "Business Development",
+              "Market Setup",
+              "Other"
+            ],
+            "required": true
+          },
+          {
+            "id": "q-activity-count",
+            "step": 4,
+            "title": "How many activities per application?",
+            "type": "number",
+            "fieldName": "dynamicAnswers.activityCount",
+            "required": true
+          }
+        ]
+      }
+    ],
+    "metadata": {
+      "status": "FUTURE"
     }
   },
   {
-    "id": "q2",
-    "label": "Do you export products?",
-    "type": "dropdown",
-    "options": ["Yes", "No"],
+    "id": "q-psg-it",
+    "step": 1,
+    "title": "Are you planning to adopt an IT solution or equipment?",
+    "type": "radio",
+    "fieldName": "dynamicAnswers.planningIT",
+    "options": [
+      "Yes",
+      "No"
+    ],
     "required": true,
-    "fieldKey": "exportProducts",
-    "condition": {
-      "field": "industry",
-      "operator": "equals",
-      "value": "Manufacturing"
+    "followUpQuestions": [
+      {
+        "id": "q-pre-approved",
+        "step": 2,
+        "title": "Is the solution on the pre-approved list?",
+        "type": "radio",
+        "fieldName": "dynamicAnswers.usePreApprovedSolution",
+        "options": [
+          "Yes",
+          "No",
+          "Not Sure"
+        ],
+        "required": true,
+        "conditions": [
+          {
+            "field": "dynamicAnswers.planningIT",
+            "operator": "equals",
+            "value": "Yes"
+          }
+        ]
+      },
+      {
+        "id": "q-already-purchased",
+        "step": 2,
+        "title": "Have you already signed a contract or made a payment for this solution?",
+        "type": "radio",
+        "fieldName": "dynamicAnswers.alreadyPurchased",
+        "options": [
+          "Yes",
+          "No"
+        ],
+        "required": true,
+        "conditions": [
+          {
+            "field": "dynamicAnswers.planningIT",
+            "operator": "equals",
+            "value": "Yes"
+          }
+        ]
+      }
+    ],
+    "metadata": {
+      "status": "FUTURE"
     }
   },
   {
-    "id": "q3",
-    "label": "Do you own a manufacturing facility?",
-    "type": "dropdown",
-    "options": ["Yes", "No"],
+    "id": "q-ccp-hiring",
+    "step": 1,
+    "title": "Are you planning to hire a mid-career professional?",
+    "type": "radio",
+    "fieldName": "dynamicAnswers.planningHiring",
+    "options": [
+      "Yes",
+      "No"
+    ],
     "required": true,
-    "fieldKey": "ownsFacility",
-    "condition": {
-      "field": "industry",
-      "operator": "equals",
-      "value": "Manufacturing"
+    "followUpQuestions": [
+      {
+        "id": "q-ccp-citizen",
+        "step": 2,
+        "title": "Is the candidate a Singapore Citizen or Permanent Resident?",
+        "type": "radio",
+        "fieldName": "dynamicAnswers.isCitizenOrPR",
+        "options": [
+          "Yes",
+          "No"
+        ],
+        "required": true,
+        "conditions": [
+          {
+            "field": "dynamicAnswers.planningHiring",
+            "operator": "equals",
+            "value": "Yes"
+          }
+        ]
+      },
+      {
+        "id": "q-ccp-age",
+        "step": 2,
+        "title": "What is the candidate's age?",
+        "type": "number",
+        "fieldName": "dynamicAnswers.candidateAge",
+        "required": true,
+        "conditions": [
+          {
+            "field": "dynamicAnswers.planningHiring",
+            "operator": "equals",
+            "value": "Yes"
+          }
+        ]
+      },
+      {
+        "id": "q-ccp-unemployed",
+        "step": 2,
+        "title": "How many months has the candidate been unemployed?",
+        "type": "number",
+        "fieldName": "dynamicAnswers.unemployedMonths",
+        "required": true,
+        "conditions": [
+          {
+            "field": "dynamicAnswers.planningHiring",
+            "operator": "equals",
+            "value": "Yes"
+          }
+        ]
+      },
+      {
+        "id": "q-ccp-shareholder",
+        "step": 2,
+        "title": "Is the candidate a shareholder of the hiring company?",
+        "type": "radio",
+        "fieldName": "dynamicAnswers.isShareholder",
+        "options": [
+          "Yes",
+          "No"
+        ],
+        "required": true,
+        "conditions": [
+          {
+            "field": "dynamicAnswers.planningHiring",
+            "operator": "equals",
+            "value": "Yes"
+          }
+        ]
+      },
+      {
+        "id": "q-ccp-exemployee",
+        "step": 2,
+        "title": "Has the candidate been previously employed by the hiring company?",
+        "type": "radio",
+        "fieldName": "dynamicAnswers.isExEmployee",
+        "options": [
+          "Yes",
+          "No"
+        ],
+        "required": true,
+        "conditions": [
+          {
+            "field": "dynamicAnswers.planningHiring",
+            "operator": "equals",
+            "value": "Yes"
+          }
+        ]
+      }
+    ],
+    "metadata": {
+      "status": "FUTURE"
     }
   },
   {
-    "id": "q4",
-    "label": "Are your products locally manufactured?",
-    "type": "dropdown",
-    "options": ["Yes", "No"],
+    "id": "q-wdg-project",
+    "step": 1,
+    "title": "Are you planning a workforce development project?",
+    "type": "radio",
+    "fieldName": "dynamicAnswers.planningWdg",
+    "options": [
+      "Yes",
+      "No"
+    ],
     "required": true,
-    "fieldKey": "locallyManufactured",
-    "condition": {
-      "field": "industry",
-      "operator": "equals",
-      "value": "Manufacturing"
+    "followUpQuestions": [
+      {
+        "id": "q-wdg-employees",
+        "step": 2,
+        "title": "How many local employees do you have?",
+        "type": "number",
+        "fieldName": "dynamicAnswers.localEmployees",
+        "required": true,
+        "conditions": [
+          {
+            "field": "dynamicAnswers.planningWdg",
+            "operator": "equals",
+            "value": "Yes"
+          }
+        ]
+      },
+      {
+        "id": "q-wdg-consultant",
+        "step": 2,
+        "title": "Will you be engaging an external consultant?",
+        "type": "radio",
+        "fieldName": "dynamicAnswers.useConsultant",
+        "options": [
+          "Yes",
+          "No"
+        ],
+        "required": true,
+        "conditions": [
+          {
+            "field": "dynamicAnswers.planningWdg",
+            "operator": "equals",
+            "value": "Yes"
+          }
+        ]
+      },
+      {
+        "id": "q-wdg-type",
+        "step": 2,
+        "title": "What type of workforce project is this?",
+        "type": "radio",
+        "fieldName": "dynamicAnswers.wdgProjectType",
+        "options": [
+          "Consultancy",
+          "Capability",
+          "Technology"
+        ],
+        "required": true,
+        "conditions": [
+          {
+            "field": "dynamicAnswers.planningWdg",
+            "operator": "equals",
+            "value": "Yes"
+          }
+        ]
+      }
+    ],
+    "metadata": {
+      "status": "FUTURE"
     }
   },
   {
-    "id": "q5",
-    "label": "Do you develop software?",
-    "type": "dropdown",
-    "options": ["Yes", "No"],
+    "id": "q-company-age",
+    "step": 1,
+    "title": "How many months has your company been in operation?",
+    "type": "number",
+    "fieldName": "dynamicAnswers.companyAgeMonths",
     "required": true,
-    "fieldKey": "developsSoftware",
-    "condition": {
-      "field": "industry",
-      "operator": "equals",
-      "value": "Technology / SaaS"
+    "followUpQuestions": [
+      {
+        "id": "q-first-business",
+        "step": 2,
+        "title": "Is this your first registered business?",
+        "type": "radio",
+        "fieldName": "dynamicAnswers.firstBusiness",
+        "options": [
+          "Yes",
+          "No"
+        ],
+        "required": true,
+        "conditions": [
+          {
+            "field": "dynamicAnswers.companyAgeMonths",
+            "operator": "<",
+            "value": 12
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "q-eeg",
+    "step": 1,
+    "title": "Are you planning to adopt energy-efficient equipment?",
+    "type": "radio",
+    "fieldName": "dynamicAnswers.planningEnergyEfficiency",
+    "options": [
+      "Yes",
+      "No"
+    ],
+    "required": true
+  },
+  {
+    "id": "q-ads",
+    "step": 1,
+    "title": "Are you planning to implement advanced digital solutions (e.g., robotics, AI)?",
+    "type": "radio",
+    "fieldName": "dynamicAnswers.planningAdvancedDigital",
+    "options": [
+      "Yes",
+      "No"
+    ],
+    "required": true
+  },
+  {
+    "id": "q-eis",
+    "step": 1,
+    "title": "Are you engaging in R&D or innovation activities?",
+    "type": "radio",
+    "fieldName": "dynamicAnswers.planningInnovation",
+    "options": [
+      "Yes",
+      "No"
+    ],
+    "required": true
+  },
+  {
+    "id": "q-ctc",
+    "step": 1,
+    "title": "Are you planning enterprise and workforce transformation (Company Training Committee)?",
+    "type": "radio",
+    "fieldName": "dynamicAnswers.planningTraining",
+    "options": [
+      "Yes",
+      "No"
+    ],
+    "required": true
+  },
+  {
+    "id": "q-automation",
+    "step": 1,
+    "title": "Are you planning an automation project?",
+    "type": "radio",
+    "fieldName": "dynamicAnswers.planningAutomation",
+    "options": [
+      "Yes",
+      "No"
+    ],
+    "required": true,
+    "followUpQuestions": [
+      {
+        "id": "q-automation-type",
+        "step": 2,
+        "title": "Is this a Software or Hardware automation project?",
+        "type": "radio",
+        "fieldName": "dynamicAnswers.automationType",
+        "options": [
+          "Software",
+          "Hardware"
+        ],
+        "required": true,
+        "conditions": [
+          {
+            "field": "dynamicAnswers.planningAutomation",
+            "operator": "equals",
+            "value": "Yes"
+          }
+        ],
+        "metadata": {
+          "status": "FUTURE"
+        }
+      },
+      {
+        "id": "q-automation-spend",
+        "step": 3,
+        "title": "What is the expected spend band for this automation?",
+        "type": "text",
+        "fieldName": "dynamicAnswers.automationSizing",
+        "required": true,
+        "conditions": [
+          {
+            "field": "dynamicAnswers.planningAutomation",
+            "operator": "equals",
+            "value": "Yes"
+          }
+        ],
+        "metadata": {
+          "status": "FUTURE"
+        }
+      }
+    ],
+    "metadata": {
+      "status": "FUTURE"
     }
   },
   {
-    "id": "q6",
-    "label": "Do you use Artificial Intelligence?",
-    "type": "dropdown",
-    "options": ["Yes", "No"],
+    "id": "q-marketing",
+    "step": 1,
+    "title": "Are you planning a marketing project?",
+    "type": "radio",
+    "fieldName": "dynamicAnswers.planningMarketing",
+    "options": [
+      "Yes",
+      "No"
+    ],
     "required": true,
-    "fieldKey": "usesAI",
-    "condition": {
-      "field": "industry",
-      "operator": "equals",
-      "value": "Technology / SaaS"
+    "followUpQuestions": [
+      {
+        "id": "q-marketing-type",
+        "step": 2,
+        "title": "Is this a Strategy or Tactical marketing project?",
+        "type": "radio",
+        "fieldName": "dynamicAnswers.marketingType",
+        "options": [
+          "Strategy",
+          "Website",
+          "SEO",
+          "Advertising",
+          "Other"
+        ],
+        "required": true,
+        "conditions": [
+          {
+            "field": "dynamicAnswers.planningMarketing",
+            "operator": "equals",
+            "value": "Yes"
+          }
+        ]
+      }
+    ],
+    "metadata": {
+      "status": "OBSOLETE"
     }
   },
   {
-    "id": "q7",
-    "label": "Is your product already launched?",
-    "type": "dropdown",
-    "options": ["Yes", "No"],
+    "id": "q-goals",
+    "step": 1,
+    "title": "Final Project Goals",
+    "type": "radio",
+    "fieldName": "dynamicAnswers.projectTimeline",
+    "options": [
+      "Confirmed",
+      "Not Confirmed"
+    ],
     "required": true,
-    "fieldKey": "isLaunched",
-    "condition": {
-      "field": "industry",
-      "operator": "equals",
-      "value": "Technology / SaaS"
+    "followUpQuestions": [
+      {
+        "id": "q-paid",
+        "step": 2,
+        "title": "Have you made any payments to the vendor?",
+        "type": "radio",
+        "fieldName": "dynamicAnswers.alreadyPaid",
+        "options": [
+          "Yes",
+          "No"
+        ],
+        "required": true,
+        "conditions": [
+          {
+            "field": "dynamicAnswers.projectTimeline",
+            "operator": "exists",
+            "value": ""
+          }
+        ],
+        "metadata": {
+          "status": "OBSOLETE"
+        }
+      },
+      {
+        "id": "q-started",
+        "step": 2,
+        "title": "Has the project started?",
+        "type": "radio",
+        "fieldName": "dynamicAnswers.projectStarted",
+        "options": [
+          "Yes",
+          "No"
+        ],
+        "required": true,
+        "conditions": [
+          {
+            "field": "dynamicAnswers.projectTimeline",
+            "operator": "exists",
+            "value": ""
+          }
+        ]
+      }
+    ],
+    "metadata": {
+      "status": "FUTURE"
     }
   },
   {
-    "id": "q8",
-    "label": "Is your product B2B or B2C?",
-    "type": "dropdown",
-    "options": ["B2B", "B2C", "Both"],
-    "required": true,
-    "fieldKey": "b2bOrB2c",
-    "condition": {
-      "field": "industry",
-      "operator": "equals",
-      "value": "Technology / SaaS"
-    }
+    "id": "q-local-shareholding",
+    "step": 1,
+    "title": "What is your percentage of local shareholding?",
+    "type": "number",
+    "fieldName": "dynamicAnswers.localShareholding",
+    "required": true
   },
   {
-    "id": "q9",
-    "label": "Are you developing a healthcare product?",
-    "type": "dropdown",
-    "options": ["Yes", "No"],
-    "required": true,
-    "fieldKey": "healthcareProduct",
-    "condition": {
-      "field": "industry",
-      "operator": "equals",
-      "value": "Healthcare"
-    }
+    "id": "q-current-ratio",
+    "step": 1,
+    "title": "What is your current ratio?",
+    "type": "number",
+    "fieldName": "dynamicAnswers.currentRatio",
+    "required": true
   },
   {
-    "id": "q10",
-    "label": "Is your company medically regulated?",
-    "type": "dropdown",
-    "options": ["Yes", "No"],
-    "required": true,
-    "fieldKey": "medicallyRegulated",
-    "condition": {
-      "field": "industry",
-      "operator": "equals",
-      "value": "Healthcare"
-    }
+    "id": "q-financially-viable",
+    "step": 1,
+    "title": "Is the company financially viable?",
+    "type": "radio",
+    "fieldName": "dynamicAnswers.financiallyViable",
+    "options": [
+      "Yes",
+      "No"
+    ],
+    "required": true
   },
   {
-    "id": "q11",
-    "label": "Are you involved in farming?",
-    "type": "dropdown",
-    "options": ["Yes", "No"],
-    "required": true,
-    "fieldKey": "involvedInFarming",
-    "condition": {
-      "field": "industry",
-      "operator": "equals",
-      "value": "Agriculture"
-    }
+    "id": "q-retained-earnings",
+    "step": 1,
+    "title": "What are your retained earnings?",
+    "type": "number",
+    "fieldName": "dynamicAnswers.retainedEarnings",
+    "required": true
   },
   {
-    "id": "q12",
-    "label": "Do you use sustainable farming practices?",
-    "type": "dropdown",
-    "options": ["Yes", "No"],
-    "required": true,
-    "fieldKey": "sustainableFarming",
-    "condition": {
-      "field": "industry",
-      "operator": "equals",
-      "value": "Agriculture"
-    }
+    "id": "q-investor-capital",
+    "step": 1,
+    "title": "How much investor capital has been raised?",
+    "type": "number",
+    "fieldName": "dynamicAnswers.investorCapital",
+    "required": true
   },
   {
-    "id": "q13",
-    "label": "Does your company work in Solar?",
-    "type": "dropdown",
-    "options": ["Yes", "No"],
-    "required": true,
-    "fieldKey": "worksInSolar",
-    "condition": {
-      "field": "industry",
-      "operator": "equals",
-      "value": "Renewable Energy"
-    }
+    "id": "q-can-afford-project",
+    "step": 1,
+    "title": "Can the company afford the project budget?",
+    "type": "radio",
+    "fieldName": "dynamicAnswers.canAffordProject",
+    "options": [
+      "Yes",
+      "No"
+    ],
+    "required": true
   },
   {
-    "id": "q14",
-    "label": "Wind?",
-    "type": "dropdown",
-    "options": ["Yes", "No"],
-    "required": true,
-    "fieldKey": "worksInWind",
-    "condition": {
-      "field": "industry",
-      "operator": "equals",
-      "value": "Renewable Energy"
-    }
+    "id": "q-use-sac-consultant",
+    "step": 1,
+    "title": "Will you use a SAC-registered consultant?",
+    "type": "radio",
+    "fieldName": "dynamicAnswers.useSacConsultant",
+    "options": [
+      "Yes",
+      "No"
+    ],
+    "required": true
   },
   {
-    "id": "q15",
-    "label": "Battery?",
-    "type": "dropdown",
-    "options": ["Yes", "No"],
-    "required": true,
-    "fieldKey": "worksInBattery",
-    "condition": {
-      "field": "industry",
-      "operator": "equals",
-      "value": "Renewable Energy"
-    }
+    "id": "q-vendor-related-party",
+    "step": 1,
+    "title": "Is the vendor a related party?",
+    "type": "radio",
+    "fieldName": "dynamicAnswers.vendorRelatedParty",
+    "options": [
+      "Yes",
+      "No"
+    ],
+    "required": true
   },
   {
-    "id": "q16",
-    "label": "Carbon reduction?",
-    "type": "dropdown",
-    "options": ["Yes", "No"],
-    "required": true,
-    "fieldKey": "carbonReduction",
-    "condition": {
-      "field": "industry",
-      "operator": "equals",
-      "value": "Renewable Energy"
-    }
+    "id": "q-project-type",
+    "step": 1,
+    "title": "What is the project type?",
+    "type": "radio",
+    "fieldName": "dynamicAnswers.projectType",
+    "options": [
+      "Brand & Marketing",
+      "Business Strategy",
+      "Human Capital Development",
+      "Financial Management",
+      "Process Redesign"
+    ],
+    "required": true
   }
 ]

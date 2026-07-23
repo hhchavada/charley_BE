@@ -1,111 +1,1326 @@
 [
   {
-    "id": "g1",
-    "name": "AI Open Innovation Challenge",
+    "id": "edg-marketing",
+    "name": "Enterprise Development Grant (EDG) - Brand & Marketing",
     "priority": 1,
-    "estimatedFunding": "Up to $500,000",
-    "supportPercentage": "70%",
-    "description": "Support businesses developing or adopting AI solutions to solve real-world problems.",
-    "tags": ["Artificial Intelligence", "Innovation", "Technology"],
-    "conditions": [
-      {
-        "field": "businessStage",
-        "operator": "not_equals",
-        "value": "Idea Stage",
-        "expectedMessage": "Company is past the Idea stage"
-      },
-      {
-        "field": "dynamicAnswers.aiInvestment",
-        "operator": "exists",
-        "value": "",
-        "expectedMessage": "Company has estimated AI investment"
-      }
-    ]
-  },
-  {
-    "id": "g2",
-    "name": "Capability Transfer Programme (CTP)",
-    "priority": 2,
-    "estimatedFunding": "Up to $100,000",
-    "supportPercentage": "50%",
-    "description": "Help companies improve business capabilities through expert knowledge transfer from foreign/local specialists.",
-    "tags": ["Training", "Knowledge Transfer", "Capability"],
-    "conditions": [
-      {
-        "field": "employees",
-        "operator": "greater_than",
-        "value": 2,
-        "expectedMessage": "Company has more than 2 employees"
-      },
-      {
-        "field": "annualRevenue",
-        "operator": "greater_than",
-        "value": 50000,
-        "expectedMessage": "Minimum revenue requirements met"
-      }
-    ]
-  },
-  {
-    "id": "g3",
-    "name": "Chief Technology Officer-as-a-Service (CTO-as-a-Service)",
-    "priority": 1,
-    "estimatedFunding": "Subsidised Consultants",
-    "supportPercentage": "70%",
-    "description": "Support SMEs that need strategic technology leadership and digital transformation planning.",
-    "tags": ["Digital Transformation", "Consultancy", "Leadership"],
-    "conditions": [
-      {
-        "field": "annualRevenue",
-        "operator": "less_than",
-        "value": 50000000,
-        "expectedMessage": "Company revenue is within SME limits"
-      },
-      {
-        "field": "country",
-        "operator": "equals",
-        "value": "Singapore",
-        "expectedMessage": "Company is based in Singapore"
-      }
-    ]
-  },
-  {
-    "id": "g4",
-    "name": "Career Conversion Programme (CCP)",
-    "priority": 3,
-    "estimatedFunding": "Salary Support",
-    "supportPercentage": "Up to 90%",
-    "description": "Support hiring and workforce transformation for mid-career individuals.",
-    "tags": ["Hiring", "Workforce", "Salary Support"],
-    "conditions": [
-      {
-        "field": "dynamicAnswers.hiringType",
-        "operator": "exists",
-        "value": "",
-        "expectedMessage": "Company is hiring roles"
-      }
-    ]
-  },
-  {
-    "id": "g5",
-    "name": "Productivity Solutions Grant (PSG)",
-    "priority": 2,
+    "mergeGroup": "EDG",
+    "streamPriority": 1,
     "estimatedFunding": "Up to $30,000",
+    "typicalFunding": ",000 - ,000 (Ceiling )",
+    "officialCap": "$50,000",
     "supportPercentage": "50%",
-    "description": "Support companies in the adoption of IT solutions and equipment to enhance business processes.",
-    "tags": ["Productivity", "Equipment", "Digital"],
+    "windowStatus": "OPEN",
+    "description": "Support for companies to develop their brand and marketing strategy.",
+    "tags": [
+      "Marketing",
+      "Brand",
+      "Strategy"
+    ],
     "conditions": [
       {
-        "field": "yearsInBusiness",
-        "operator": "greater_than",
-        "value": 1,
-        "expectedMessage": "Company has been operating for over 1 year"
+        "condition": "OR",
+        "rules": [
+          {
+            "field": "initialData.purpose",
+            "operator": "contains",
+            "value": "Business Growth"
+          },
+          {
+            "field": "initialData.purpose",
+            "operator": "contains",
+            "value": "Entering New Markets"
+          },
+          {
+            "field": "dynamicAnswers.projectType",
+            "operator": "equals",
+            "value": "Brand & Marketing"
+          },
+          {
+            "field": "dynamicAnswers.planningMarketing",
+            "operator": "equals",
+            "value": "Yes"
+          }
+        ]
       },
       {
-        "field": "dynamicAnswers.equipmentProductivity",
+        "field": "dynamicAnswers.localShareholding",
+        "operator": ">=",
+        "value": 30
+      },
+      {
+        "field": "dynamicAnswers.financiallyViable",
+        "operator": "equals",
+        "value": "Yes"
+      },
+      {
+        "field": "dynamicAnswers.currentRatio",
+        "operator": ">",
+        "value": 1
+      },
+      {
+        "field": "dynamicAnswers.retainedEarnings",
+        "operator": ">",
+        "value": 50000
+      },
+      {
+        "field": "dynamicAnswers.canAffordProject",
+        "operator": "equals",
+        "value": "Yes"
+      },
+      {
+        "field": "dynamicAnswers.investorCapital",
+        "operator": "exists",
+        "value": ""
+      },
+      {
+        "field": "dynamicAnswers.projectStarted",
+        "operator": "equals",
+        "value": "No"
+      },
+      {
+        "field": "dynamicAnswers.useSacConsultant",
+        "operator": "equals",
+        "value": "Yes"
+      },
+      {
+        "field": "dynamicAnswers.vendorRelatedParty",
+        "operator": "equals",
+        "value": "No"
+      },
+      {
+        "field": "dynamicAnswers.marketingType",
+        "operator": "not_in",
+        "value": [
+          "Websites",
+          "SEO",
+          "Advertising"
+        ]
+      }
+    ],
+    "metadata": {
+      "consultantRequired": true,
+      "requiresProjectNotStarted": true,
+      "warnings": [
+        "Websites / SEO / Advertising should recommend PSG instead."
+      ]
+    },
+    "maximumFunding": ",000",
+    "processingTime": "8-12 weeks",
+    "claimTime": "8-12 weeks",
+    "payoutTime": "1-4 weeks",
+    "grantCategory": "Business Growth"
+  },
+  {
+    "id": "edg-strategy",
+    "name": "Enterprise Development Grant (EDG) - Business Strategy",
+    "priority": 1,
+    "mergeGroup": "EDG",
+    "streamPriority": 2,
+    "estimatedFunding": "Up to $40,000",
+    "typicalFunding": ",000 - ,000 (Ceiling )",
+    "officialCap": "$50,000",
+    "supportPercentage": "50%",
+    "windowStatus": "OPEN",
+    "description": "Support for companies to develop their core business strategy.",
+    "tags": [
+      "Business",
+      "Strategy"
+    ],
+    "conditions": [
+      {
+        "condition": "OR",
+        "rules": [
+          {
+            "field": "initialData.purpose",
+            "operator": "contains",
+            "value": "Business Growth"
+          },
+          {
+            "field": "initialData.purpose",
+            "operator": "contains",
+            "value": "Entering New Markets"
+          },
+          {
+            "field": "initialData.purpose",
+            "operator": "contains",
+            "value": "Developing New Products"
+          },
+          {
+            "field": "dynamicAnswers.projectType",
+            "operator": "equals",
+            "value": "Business Strategy"
+          }
+        ]
+      },
+      {
+        "field": "dynamicAnswers.localShareholding",
+        "operator": ">=",
+        "value": 30
+      },
+      {
+        "field": "dynamicAnswers.financiallyViable",
+        "operator": "equals",
+        "value": "Yes"
+      },
+      {
+        "field": "dynamicAnswers.currentRatio",
+        "operator": ">",
+        "value": 1
+      },
+      {
+        "field": "dynamicAnswers.retainedEarnings",
+        "operator": ">",
+        "value": 50000
+      },
+      {
+        "field": "dynamicAnswers.canAffordProject",
+        "operator": "equals",
+        "value": "Yes"
+      },
+      {
+        "field": "dynamicAnswers.investorCapital",
+        "operator": "exists",
+        "value": ""
+      },
+      {
+        "field": "dynamicAnswers.projectStarted",
+        "operator": "equals",
+        "value": "No"
+      },
+      {
+        "field": "dynamicAnswers.useSacConsultant",
+        "operator": "equals",
+        "value": "Yes"
+      },
+      {
+        "field": "dynamicAnswers.vendorRelatedParty",
+        "operator": "equals",
+        "value": "No"
+      },
+      {
+        "field": "dynamicAnswers.projectType",
+        "operator": "equals",
+        "value": "Business Strategy"
+      }
+    ],
+    "metadata": {
+      "consultantRequired": true,
+      "requiresProjectNotStarted": true
+    },
+    "maximumFunding": ",000",
+    "processingTime": "8-12 weeks",
+    "claimTime": "8-12 weeks",
+    "payoutTime": "1-4 weeks",
+    "grantCategory": "Business Growth"
+  },
+  {
+    "id": "mra-business-development",
+    "name": "Market Readiness Assistance (MRA) - Business Development",
+    "priority": 2,
+    "mergeGroup": "MRA",
+    "streamPriority": 2,
+    "estimatedFunding": "Up to $100,000",
+    "typicalFunding": ",000",
+    "officialCap": "$100,000 per market",
+    "supportPercentage": "70%",
+    "windowStatus": "OPEN",
+    "description": "Support for overseas business development.",
+    "tags": [
+      "Overseas",
+      "Business Development"
+    ],
+    "conditions": [
+      {
+        "condition": "OR",
+        "rules": [
+          {
+            "field": "initialData.purpose",
+            "operator": "contains",
+            "value": "Entering New Markets"
+          },
+          {
+            "field": "dynamicAnswers.planningOverseas",
+            "operator": "equals",
+            "value": "Yes"
+          }
+        ]
+      },
+      {
+        "field": "dynamicAnswers.targetMarket",
+        "operator": "exists",
+        "value": ""
+      },
+      {
+        "field": "dynamicAnswers.newMarket",
+        "operator": "equals",
+        "value": "Yes"
+      },
+      {
+        "field": "dynamicAnswers.overseasSales",
+        "operator": "<",
+        "value": 100000
+      },
+      {
+        "field": "dynamicAnswers.activityCount",
+        "operator": "<=",
+        "value": 1
+      },
+      {
+        "field": "dynamicAnswers.mraActivityType",
+        "operator": "equals",
+        "value": "Business Development"
+      }
+    ],
+    "metadata": {
+      "notes": "One activity per application. Promotion (20k), Business Dev (50k), Market Setup (30k). Overall 100k cap per market."
+    },
+    "maximumFunding": ",000"
+  },
+  {
+    "id": "psg-it-solutions",
+    "name": "Productivity Solutions Grant (PSG) - IT Solutions",
+    "priority": 3,
+    "mergeGroup": "PSG",
+    "streamPriority": 2,
+    "estimatedFunding": "Up to $30,000",
+    "typicalFunding": "Up to $30,000",
+    "officialCap": "$30,000",
+    "supportPercentage": "50%",
+    "windowStatus": "OPEN",
+    "compactDisplay": true,
+    "description": "Support for companies to adopt pre-approved IT solutions and equipment.",
+    "tags": [
+      "IT Solutions",
+      "Productivity"
+    ],
+    "conditions": [
+      {
+        "condition": "OR",
+        "rules": [
+          {
+            "field": "initialData.purpose",
+            "operator": "contains",
+            "value": "Digital Transformation"
+          },
+          {
+            "field": "initialData.purpose",
+            "operator": "contains",
+            "value": "Technology Adoption"
+          },
+          {
+            "field": "initialData.purpose",
+            "operator": "contains",
+            "value": "Improving Productivity"
+          },
+          {
+            "field": "dynamicAnswers.planningIT",
+            "operator": "equals",
+            "value": "Yes"
+          }
+        ]
+      },
+      {
+        "field": "dynamicAnswers.usePreApprovedSolution",
         "operator": "equals",
         "value": "Yes",
-        "expectedMessage": "Equipment will improve productivity"
+        "expectedMessage": "Must use a pre-approved solution"
+      },
+      {
+        "field": "dynamicAnswers.alreadyPurchased",
+        "operator": "equals",
+        "value": "No",
+        "expectedMessage": "Solution must not be already purchased or signed"
       }
-    ]
+    ],
+    "metadata": {
+      "compactRecommendation": true,
+      "neverFeatured": true,
+      "requiresProjectNotStarted": true
+    },
+    "maximumFunding": ",000/year"
+  },
+  {
+    "id": "psg-marketing-tactical",
+    "name": "Productivity Solutions Grant (PSG) - Marketing Tactical",
+    "priority": 3,
+    "mergeGroup": "PSG",
+    "streamPriority": 1,
+    "estimatedFunding": "Up to $30,000",
+    "typicalFunding": "Up to $30,000",
+    "officialCap": "$30,000",
+    "supportPercentage": "50%",
+    "windowStatus": "OPEN",
+    "compactDisplay": true,
+    "description": "Support for tactical marketing implementation.",
+    "tags": [
+      "Marketing",
+      "Tactical"
+    ],
+    "conditions": [
+      {
+        "condition": "OR",
+        "rules": [
+          {
+            "field": "initialData.purpose",
+            "operator": "contains",
+            "value": "Digital Transformation"
+          },
+          {
+            "field": "initialData.purpose",
+            "operator": "contains",
+            "value": "Technology Adoption"
+          },
+          {
+            "field": "initialData.purpose",
+            "operator": "contains",
+            "value": "Improving Productivity"
+          },
+          {
+            "field": "dynamicAnswers.planningIT",
+            "operator": "equals",
+            "value": "Yes"
+          }
+        ]
+      },
+      {
+        "field": "dynamicAnswers.marketingType",
+        "operator": "equals",
+        "value": "Tactical",
+        "expectedMessage": "Project must be a tactical marketing implementation"
+      },
+      {
+        "field": "dynamicAnswers.alreadyPurchased",
+        "operator": "equals",
+        "value": "No",
+        "expectedMessage": "Solution must not be already purchased or signed"
+      }
+    ],
+    "metadata": {
+      "compactRecommendation": true,
+      "neverFeatured": true,
+      "requiresProjectNotStarted": true
+    },
+    "maximumFunding": ",000/year"
+  },
+  {
+    "id": "ccp-mature",
+    "name": "Career Conversion Programme (CCP) - Mature Worker",
+    "priority": 4,
+    "mergeGroup": "CCP",
+    "streamPriority": 1,
+    "estimatedFunding": "Salary Support",
+    "typicalFunding": "Up to 90% Salary Support",
+    "officialCap": "$6,000 per month",
+    "supportPercentage": "70-90%",
+    "windowStatus": "OPEN",
+    "description": "Salary support for mid-career individuals aged 40 and above undergoing skills conversion.",
+    "tags": [
+      "Hiring",
+      "Training",
+      "Salary Support"
+    ],
+    "conditions": [
+      {
+        "condition": "OR",
+        "rules": [
+          {
+            "field": "initialData.purpose",
+            "operator": "contains",
+            "value": "Finding Skilled Employees"
+          },
+          {
+            "field": "dynamicAnswers.planningHiring",
+            "operator": "equals",
+            "value": "Yes"
+          }
+        ]
+      },
+      {
+        "field": "dynamicAnswers.isCitizenOrPR",
+        "operator": "equals",
+        "value": "Yes",
+        "expectedMessage": "Candidate must be a Citizen or PR"
+      },
+      {
+        "field": "dynamicAnswers.candidateAge",
+        "operator": ">=",
+        "value": 40,
+        "expectedMessage": "Candidate must be at least 40 years old for mature worker support"
+      },
+      {
+        "field": "dynamicAnswers.isShareholder",
+        "operator": "equals",
+        "value": "No",
+        "expectedMessage": "Candidate must not be a shareholder"
+      },
+      {
+        "field": "dynamicAnswers.isExEmployee",
+        "operator": "equals",
+        "value": "No",
+        "expectedMessage": "Candidate must not be an ex-employee"
+      }
+    ],
+    "metadata": {
+      "notes": "Subject to monthly caps based on salary."
+    }
+  },
+  {
+    "id": "ccp-ltu",
+    "name": "Career Conversion Programme (CCP) - Long-Term Unemployed",
+    "priority": 4,
+    "mergeGroup": "CCP",
+    "streamPriority": 2,
+    "estimatedFunding": "Salary Support",
+    "typicalFunding": "Up to 90% Salary Support",
+    "officialCap": "$6,000 per month",
+    "supportPercentage": "70-90%",
+    "windowStatus": "OPEN",
+    "description": "Salary support for individuals unemployed for 6 months or more.",
+    "tags": [
+      "Hiring",
+      "Training",
+      "Salary Support"
+    ],
+    "conditions": [
+      {
+        "condition": "OR",
+        "rules": [
+          {
+            "field": "initialData.purpose",
+            "operator": "contains",
+            "value": "Finding Skilled Employees"
+          },
+          {
+            "field": "dynamicAnswers.planningHiring",
+            "operator": "equals",
+            "value": "Yes"
+          }
+        ]
+      },
+      {
+        "field": "dynamicAnswers.isCitizenOrPR",
+        "operator": "equals",
+        "value": "Yes",
+        "expectedMessage": "Candidate must be a Citizen or PR"
+      },
+      {
+        "field": "dynamicAnswers.candidateAge",
+        "operator": ">=",
+        "value": 21,
+        "expectedMessage": "Candidate must be at least 21 years old"
+      },
+      {
+        "field": "dynamicAnswers.unemployedMonths",
+        "operator": ">=",
+        "value": 6,
+        "expectedMessage": "Candidate must be unemployed for at least 6 months"
+      },
+      {
+        "field": "dynamicAnswers.isShareholder",
+        "operator": "equals",
+        "value": "No",
+        "expectedMessage": "Candidate must not be a shareholder"
+      },
+      {
+        "field": "dynamicAnswers.isExEmployee",
+        "operator": "equals",
+        "value": "No",
+        "expectedMessage": "Candidate must not be an ex-employee"
+      }
+    ],
+    "metadata": {
+      "notes": "Subject to monthly caps based on salary."
+    }
+  },
+  {
+    "id": "ccp-standard",
+    "name": "Career Conversion Programme (CCP) - Standard",
+    "priority": 4,
+    "mergeGroup": "CCP",
+    "streamPriority": 3,
+    "estimatedFunding": "Salary Support",
+    "typicalFunding": "Up to 70% Salary Support",
+    "officialCap": "$4,000 per month",
+    "supportPercentage": "70-90%",
+    "windowStatus": "OPEN",
+    "description": "Salary support for mid-career individuals undergoing skills conversion.",
+    "tags": [
+      "Hiring",
+      "Training",
+      "Salary Support"
+    ],
+    "conditions": [
+      {
+        "condition": "OR",
+        "rules": [
+          {
+            "field": "initialData.purpose",
+            "operator": "contains",
+            "value": "Finding Skilled Employees"
+          },
+          {
+            "field": "dynamicAnswers.planningHiring",
+            "operator": "equals",
+            "value": "Yes"
+          }
+        ]
+      },
+      {
+        "field": "dynamicAnswers.isCitizenOrPR",
+        "operator": "equals",
+        "value": "Yes",
+        "expectedMessage": "Candidate must be a Citizen or PR"
+      },
+      {
+        "field": "dynamicAnswers.candidateAge",
+        "operator": ">=",
+        "value": 21,
+        "expectedMessage": "Candidate must be at least 21 years old"
+      },
+      {
+        "field": "dynamicAnswers.isShareholder",
+        "operator": "equals",
+        "value": "No",
+        "expectedMessage": "Candidate must not be a shareholder"
+      },
+      {
+        "field": "dynamicAnswers.isExEmployee",
+        "operator": "equals",
+        "value": "No",
+        "expectedMessage": "Candidate must not be an ex-employee"
+      }
+    ],
+    "metadata": {
+      "notes": "Subject to monthly caps based on salary."
+    }
+  },
+  {
+    "id": "wdg-consultancy",
+    "name": "Workforce Development Grant (WDG) - Consultancy",
+    "priority": 5,
+    "mergeGroup": "WDG",
+    "streamPriority": 1,
+    "estimatedFunding": "Up to $15,000",
+    "typicalFunding": ",000 - ,000",
+    "supportPercentage": "70%",
+    "windowStatus": "OPEN",
+    "description": "Support for engaging external consultants to redesign workforce strategies.",
+    "tags": [
+      "Workforce",
+      "Consultancy",
+      "HR"
+    ],
+    "conditions": [
+      {
+        "condition": "OR",
+        "rules": [
+          {
+            "field": "initialData.purpose",
+            "operator": "contains",
+            "value": "Finding Skilled Employees"
+          },
+          {
+            "field": "initialData.purpose",
+            "operator": "contains",
+            "value": "Improving Productivity"
+          },
+          {
+            "field": "dynamicAnswers.planningWdg",
+            "operator": "equals",
+            "value": "Yes"
+          }
+        ]
+      },
+      {
+        "field": "dynamicAnswers.localEmployees",
+        "operator": ">=",
+        "value": 3,
+        "expectedMessage": "Must have a minimum of 3 local employees"
+      },
+      {
+        "field": "dynamicAnswers.useConsultant",
+        "operator": "equals",
+        "value": "Yes",
+        "expectedMessage": "Must engage an external consultant"
+      },
+      {
+        "field": "dynamicAnswers.wdgProjectType",
+        "operator": "equals",
+        "value": "Consultancy"
+      }
+    ],
+    "metadata": {
+      "notes": "Available for Consultancy, Capability, and Technology."
+    }
+  },
+  {
+    "id": "wdg-capability",
+    "name": "Workforce Development Grant (WDG) - Capability",
+    "priority": 5,
+    "mergeGroup": "WDG",
+    "streamPriority": 2,
+    "estimatedFunding": "Up to $15,000",
+    "typicalFunding": ",000 - ,000",
+    "supportPercentage": "70%",
+    "windowStatus": "OPEN",
+    "description": "Support for workforce capability development.",
+    "tags": [
+      "Workforce",
+      "Capability",
+      "HR"
+    ],
+    "conditions": [
+      {
+        "condition": "OR",
+        "rules": [
+          {
+            "field": "initialData.purpose",
+            "operator": "contains",
+            "value": "Finding Skilled Employees"
+          },
+          {
+            "field": "initialData.purpose",
+            "operator": "contains",
+            "value": "Improving Productivity"
+          },
+          {
+            "field": "dynamicAnswers.planningWdg",
+            "operator": "equals",
+            "value": "Yes"
+          }
+        ]
+      },
+      {
+        "field": "dynamicAnswers.localEmployees",
+        "operator": ">=",
+        "value": 3,
+        "expectedMessage": "Must have a minimum of 3 local employees"
+      },
+      {
+        "field": "dynamicAnswers.useConsultant",
+        "operator": "equals",
+        "value": "Yes",
+        "expectedMessage": "Must engage an external consultant"
+      },
+      {
+        "field": "dynamicAnswers.wdgProjectType",
+        "operator": "equals",
+        "value": "Capability"
+      }
+    ],
+    "metadata": {
+      "notes": "Available for Consultancy, Capability, and Technology."
+    }
+  },
+  {
+    "id": "wdg-technology",
+    "name": "Workforce Development Grant (WDG) - Technology",
+    "priority": 5,
+    "mergeGroup": "WDG",
+    "streamPriority": 3,
+    "estimatedFunding": "Up to $15,000",
+    "typicalFunding": ",000 - ,000",
+    "supportPercentage": "70%",
+    "windowStatus": "OPEN",
+    "description": "Support for adopting technology to aid workforce development.",
+    "tags": [
+      "Workforce",
+      "Technology",
+      "HR"
+    ],
+    "conditions": [
+      {
+        "condition": "OR",
+        "rules": [
+          {
+            "field": "initialData.purpose",
+            "operator": "contains",
+            "value": "Finding Skilled Employees"
+          },
+          {
+            "field": "initialData.purpose",
+            "operator": "contains",
+            "value": "Improving Productivity"
+          },
+          {
+            "field": "dynamicAnswers.planningWdg",
+            "operator": "equals",
+            "value": "Yes"
+          }
+        ]
+      },
+      {
+        "field": "dynamicAnswers.localEmployees",
+        "operator": ">=",
+        "value": 3,
+        "expectedMessage": "Must have a minimum of 3 local employees"
+      },
+      {
+        "field": "dynamicAnswers.useConsultant",
+        "operator": "equals",
+        "value": "Yes",
+        "expectedMessage": "Must engage an external consultant"
+      },
+      {
+        "field": "dynamicAnswers.wdgProjectType",
+        "operator": "equals",
+        "value": "Technology"
+      }
+    ],
+    "metadata": {
+      "notes": "Available for Consultancy, Capability, and Technology."
+    }
+  },
+  {
+    "id": "startup-sg-founder",
+    "name": "Startup SG Founder",
+    "priority": 6,
+    "mergeGroup": "Startup SG",
+    "streamPriority": 1,
+    "estimatedFunding": "Up to $50,000",
+    "typicalFunding": "Up to $50,000",
+    "supportPercentage": "100%",
+    "windowStatus": "OPEN",
+    "description": "Capital grant for first-time entrepreneurs.",
+    "tags": [
+      "Startup",
+      "Founder"
+    ],
+    "conditions": [
+      {
+        "condition": "OR",
+        "rules": [
+          {
+            "field": "companyProfile.companyAgeMonths",
+            "operator": "<=",
+            "value": 12
+          },
+          {
+            "field": "dynamicAnswers.companyAgeMonths",
+            "operator": "<=",
+            "value": 12
+          }
+        ]
+      },
+      {
+        "field": "dynamicAnswers.companyAgeMonths",
+        "operator": "<",
+        "value": 12,
+        "expectedMessage": "Company must be under 12 months old"
+      },
+      {
+        "field": "dynamicAnswers.firstBusiness",
+        "operator": "equals",
+        "value": "Yes",
+        "expectedMessage": "Must be your first registered business"
+      }
+    ],
+    "metadata": {
+      "notes": "Only show when company under 12 months"
+    }
+  },
+  {
+    "id": "eeg",
+    "name": "Energy Efficiency Grant (EEG)",
+    "priority": 6,
+    "mergeGroup": "EEG",
+    "streamPriority": 1,
+    "estimatedFunding": "Up to $30,000",
+    "typicalFunding": "Up to $30,000",
+    "supportPercentage": "70%",
+    "windowStatus": "OPEN",
+    "description": "Support for companies to adopt energy-efficient equipment.",
+    "tags": [
+      "Sustainability",
+      "Equipment"
+    ],
+    "conditions": [
+      {
+        "condition": "OR",
+        "rules": [
+          {
+            "field": "initialData.purpose",
+            "operator": "contains",
+            "value": "Sustainability"
+          },
+          {
+            "field": "initialData.purpose",
+            "operator": "contains",
+            "value": "High Operating Costs"
+          },
+          {
+            "field": "dynamicAnswers.planningEnergyEfficiency",
+            "operator": "equals",
+            "value": "Yes"
+          }
+        ]
+      },
+      {
+        "field": "dynamicAnswers.planningEnergyEfficiency",
+        "operator": "equals",
+        "value": "Yes"
+      },
+      {
+        "field": "dynamicAnswers.alreadyPurchased",
+        "operator": "equals",
+        "value": "No",
+        "expectedMessage": "Equipment must not be already purchased"
+      },
+      {
+        "field": "dynamicAnswers.eligibleSector",
+        "operator": "in",
+        "value": [
+          "Construction",
+          "Food & Beverage",
+          "Manufacturing",
+          "Maritime",
+          "Retail",
+          "Logistics",
+          "Data Centres"
+        ],
+        "expectedMessage": "Company must operate in an eligible sector"
+      }
+    ],
+    "metadata": {
+      "notes": "Only for eligible sectors list."
+    }
+  },
+  {
+    "id": "ads",
+    "name": "Advanced Digital Solutions (ADS)",
+    "priority": 6,
+    "mergeGroup": "ADS",
+    "streamPriority": 1,
+    "estimatedFunding": "Up to 70% support",
+    "typicalFunding": "Variable",
+    "supportPercentage": "70%",
+    "windowStatus": "OPEN",
+    "description": "Support for advanced digital solutions like robotics and AI.",
+    "tags": [
+      "Digital",
+      "Technology"
+    ],
+    "conditions": [
+      {
+        "condition": "OR",
+        "rules": [
+          {
+            "field": "initialData.purpose",
+            "operator": "contains",
+            "value": "Digital Transformation"
+          },
+          {
+            "field": "initialData.purpose",
+            "operator": "contains",
+            "value": "Technology Adoption"
+          },
+          {
+            "field": "dynamicAnswers.planningAdvancedDigital",
+            "operator": "equals",
+            "value": "Yes"
+          }
+        ]
+      },
+      {
+        "field": "dynamicAnswers.planningAdvancedDigital",
+        "operator": "equals",
+        "value": "Yes"
+      }
+    ],
+    "metadata": {
+      "notes": "For first-time applicants only. Check window flag."
+    }
+  },
+  {
+    "id": "eis",
+    "name": "Enterprise Innovation Scheme (EIS)",
+    "priority": 6,
+    "mergeGroup": "EIS",
+    "streamPriority": 1,
+    "estimatedFunding": "Tax Deduction",
+    "typicalFunding": "Tax Deduction",
+    "excludeFromTotalFunding": true,
+    "stacksWithEverything": true,
+    "windowStatus": "OPEN",
+    "description": "Tax deductions for R&D and innovation activities.",
+    "tags": [
+      "Tax",
+      "Innovation"
+    ],
+    "conditions": [
+      {
+        "condition": "OR",
+        "rules": [
+          {
+            "field": "initialData.purpose",
+            "operator": "contains",
+            "value": "Developing New Products"
+          },
+          {
+            "field": "initialData.purpose",
+            "operator": "contains",
+            "value": "Technology Adoption"
+          },
+          {
+            "field": "dynamicAnswers.planningInnovation",
+            "operator": "equals",
+            "value": "Yes"
+          }
+        ]
+      },
+      {
+        "field": "dynamicAnswers.planningInnovation",
+        "operator": "equals",
+        "value": "Yes"
+      }
+    ],
+    "metadata": {
+      "badges": [
+        "Stacks with everything"
+      ],
+      "notes": "400% tax deduction.",
+      "stacksWithOtherGrants": true
+    }
+  },
+  {
+    "id": "ctc",
+    "name": "Company Training Committee (CTC) Grant",
+    "priority": 6,
+    "mergeGroup": "CTC",
+    "streamPriority": 1,
+    "estimatedFunding": "Up to $100,000",
+    "typicalFunding": "Up to $100,000",
+    "prepareNext": true,
+    "windowStatus": "OPEN",
+    "description": "Support for companies to implement enterprise and workforce transformation plans.",
+    "tags": [
+      "Training",
+      "Transformation"
+    ],
+    "conditions": [
+      {
+        "condition": "OR",
+        "rules": [
+          {
+            "field": "initialData.purpose",
+            "operator": "contains",
+            "value": "Finding Skilled Employees"
+          },
+          {
+            "field": "initialData.purpose",
+            "operator": "contains",
+            "value": "Improving Productivity"
+          },
+          {
+            "field": "initialData.purpose",
+            "operator": "contains",
+            "value": "Digital Transformation"
+          },
+          {
+            "field": "dynamicAnswers.planningTraining",
+            "operator": "equals",
+            "value": "Yes"
+          }
+        ]
+      },
+      {
+        "field": "dynamicAnswers.planningTraining",
+        "operator": "equals",
+        "value": "Yes"
+      }
+    ],
+    "metadata": {
+      "showInReadyNow": false,
+      "isPrepareNext": true
+    }
+  },
+  {
+    "id": "edg-human-capital",
+    "name": "Enterprise Development Grant (EDG) - Human Capital Development",
+    "priority": 1,
+    "mergeGroup": "EDG",
+    "streamPriority": 3,
+    "estimatedFunding": "Up to ,000",
+    "typicalFunding": ",000 - ,000",
+    "officialCap": ",000",
+    "supportPercentage": "50%",
+    "windowStatus": "OPEN",
+    "description": "Support for companies to develop their human capital development",
+    "tags": [
+      "Business",
+      "Human"
+    ],
+    "conditions": [
+      {
+        "condition": "OR",
+        "rules": [
+          {
+            "field": "initialData.purpose",
+            "operator": "contains",
+            "value": "Finding Skilled Employees"
+          },
+          {
+            "field": "dynamicAnswers.projectType",
+            "operator": "equals",
+            "value": "Human Capital Development"
+          },
+          {
+            "field": "dynamicAnswers.planningHiring",
+            "operator": "equals",
+            "value": "Yes"
+          }
+        ]
+      },
+      {
+        "field": "dynamicAnswers.localShareholding",
+        "operator": ">=",
+        "value": 30
+      },
+      {
+        "field": "dynamicAnswers.financiallyViable",
+        "operator": "equals",
+        "value": "Yes"
+      },
+      {
+        "field": "dynamicAnswers.currentRatio",
+        "operator": ">",
+        "value": 1
+      },
+      {
+        "field": "dynamicAnswers.retainedEarnings",
+        "operator": ">",
+        "value": 50000
+      },
+      {
+        "field": "dynamicAnswers.canAffordProject",
+        "operator": "equals",
+        "value": "Yes"
+      },
+      {
+        "field": "dynamicAnswers.investorCapital",
+        "operator": "exists",
+        "value": ""
+      },
+      {
+        "field": "dynamicAnswers.projectStarted",
+        "operator": "equals",
+        "value": "No"
+      },
+      {
+        "field": "dynamicAnswers.useSacConsultant",
+        "operator": "equals",
+        "value": "Yes"
+      },
+      {
+        "field": "dynamicAnswers.vendorRelatedParty",
+        "operator": "equals",
+        "value": "No"
+      },
+      {
+        "field": "dynamicAnswers.projectType",
+        "operator": "equals",
+        "value": "Human Capital Development"
+      }
+    ],
+    "metadata": {
+      "consultantRequired": true,
+      "requiresProjectNotStarted": true
+    },
+    "maximumFunding": ",000",
+    "processingTime": "8-12 weeks",
+    "claimTime": "8-12 weeks",
+    "payoutTime": "1-4 weeks",
+    "grantCategory": "Business Growth"
+  },
+  {
+    "id": "edg-financial-management",
+    "name": "Enterprise Development Grant (EDG) - Financial Management",
+    "priority": 1,
+    "mergeGroup": "EDG",
+    "streamPriority": 4,
+    "estimatedFunding": "Up to ,000",
+    "typicalFunding": ",000 - ,000",
+    "officialCap": ",000",
+    "supportPercentage": "50%",
+    "windowStatus": "OPEN",
+    "description": "Support for companies to develop their financial management",
+    "tags": [
+      "Business",
+      "Financial"
+    ],
+    "conditions": [
+      {
+        "condition": "OR",
+        "rules": [
+          {
+            "field": "initialData.purpose",
+            "operator": "contains",
+            "value": "High Operating Costs"
+          },
+          {
+            "field": "dynamicAnswers.projectType",
+            "operator": "equals",
+            "value": "Financial Management"
+          }
+        ]
+      },
+      {
+        "field": "dynamicAnswers.localShareholding",
+        "operator": ">=",
+        "value": 30
+      },
+      {
+        "field": "dynamicAnswers.financiallyViable",
+        "operator": "equals",
+        "value": "Yes"
+      },
+      {
+        "field": "dynamicAnswers.currentRatio",
+        "operator": ">",
+        "value": 1
+      },
+      {
+        "field": "dynamicAnswers.retainedEarnings",
+        "operator": ">",
+        "value": 50000
+      },
+      {
+        "field": "dynamicAnswers.canAffordProject",
+        "operator": "equals",
+        "value": "Yes"
+      },
+      {
+        "field": "dynamicAnswers.investorCapital",
+        "operator": "exists",
+        "value": ""
+      },
+      {
+        "field": "dynamicAnswers.projectStarted",
+        "operator": "equals",
+        "value": "No"
+      },
+      {
+        "field": "dynamicAnswers.useSacConsultant",
+        "operator": "equals",
+        "value": "Yes"
+      },
+      {
+        "field": "dynamicAnswers.vendorRelatedParty",
+        "operator": "equals",
+        "value": "No"
+      },
+      {
+        "field": "dynamicAnswers.projectType",
+        "operator": "equals",
+        "value": "Financial Management"
+      }
+    ],
+    "metadata": {
+      "consultantRequired": true,
+      "requiresProjectNotStarted": true
+    },
+    "maximumFunding": ",000",
+    "processingTime": "8-12 weeks",
+    "claimTime": "8-12 weeks",
+    "payoutTime": "1-4 weeks",
+    "grantCategory": "Business Growth"
+  },
+  {
+    "id": "edg-process-redesign",
+    "name": "Enterprise Development Grant (EDG) - Process Redesign",
+    "priority": 1,
+    "mergeGroup": "EDG",
+    "streamPriority": 5,
+    "estimatedFunding": "Up to ,000",
+    "typicalFunding": ",000 - ,000",
+    "officialCap": ",000",
+    "supportPercentage": "50%",
+    "windowStatus": "OPEN",
+    "description": "Support for companies to develop their process redesign",
+    "tags": [
+      "Business",
+      "Process"
+    ],
+    "conditions": [
+      {
+        "condition": "OR",
+        "rules": [
+          {
+            "field": "initialData.purpose",
+            "operator": "contains",
+            "value": "Improving Productivity"
+          },
+          {
+            "field": "initialData.purpose",
+            "operator": "contains",
+            "value": "High Operating Costs"
+          },
+          {
+            "field": "dynamicAnswers.projectType",
+            "operator": "equals",
+            "value": "Process Redesign"
+          }
+        ]
+      },
+      {
+        "field": "dynamicAnswers.localShareholding",
+        "operator": ">=",
+        "value": 30
+      },
+      {
+        "field": "dynamicAnswers.financiallyViable",
+        "operator": "equals",
+        "value": "Yes"
+      },
+      {
+        "field": "dynamicAnswers.currentRatio",
+        "operator": ">",
+        "value": 1
+      },
+      {
+        "field": "dynamicAnswers.retainedEarnings",
+        "operator": ">",
+        "value": 50000
+      },
+      {
+        "field": "dynamicAnswers.canAffordProject",
+        "operator": "equals",
+        "value": "Yes"
+      },
+      {
+        "field": "dynamicAnswers.investorCapital",
+        "operator": "exists",
+        "value": ""
+      },
+      {
+        "field": "dynamicAnswers.projectStarted",
+        "operator": "equals",
+        "value": "No"
+      },
+      {
+        "field": "dynamicAnswers.useSacConsultant",
+        "operator": "equals",
+        "value": "Yes"
+      },
+      {
+        "field": "dynamicAnswers.vendorRelatedParty",
+        "operator": "equals",
+        "value": "No"
+      },
+      {
+        "field": "dynamicAnswers.projectType",
+        "operator": "equals",
+        "value": "Process Redesign"
+      }
+    ],
+    "metadata": {
+      "consultantRequired": true,
+      "requiresProjectNotStarted": true
+    },
+    "maximumFunding": ",000",
+    "processingTime": "8-12 weeks",
+    "claimTime": "8-12 weeks",
+    "payoutTime": "1-4 weeks",
+    "grantCategory": "Business Growth"
   }
 ]
