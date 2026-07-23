@@ -105,15 +105,23 @@ class LocalJsonConfigLoader implements IConfigurationLoader {
     const collectedByChat = new Set<string>();
     const missingSource = new Set<string>();
 
-    grants.forEach(g => {
-      g.ruleGroup.rules.forEach((r: any) => {
-        const field = r.fieldPath;
+    const collectFields = (node: any) => {
+      if (!node) return;
+      if (node.rules && Array.isArray(node.rules)) {
+        node.rules.forEach((child: any) => collectFields(child));
+      }
+      if (node.fieldPath) {
+        const field = node.fieldPath;
         if (questionMap.has(field)) {
           collectedByChat.add(field);
         } else if (!step12Fields.has(field)) {
           missingSource.add(field);
         }
-      });
+      }
+    };
+
+    grants.forEach(g => {
+      collectFields(g.ruleGroup);
     });
 
     if (missingSource.size > 0) {
