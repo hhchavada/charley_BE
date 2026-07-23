@@ -10,7 +10,7 @@ export class PromptRepository {
     return PromptTemplate.findOne({ templateId: id }).lean<PromptDTO>();
   }
 
-  static async upsert(templateId: string, data: Partial<PromptDTO>): Promise<PromptDTO> {
+  static async upsert(templateId: string, data: Partial<PromptDTO>): Promise<PromptDTO | null> {
     return PromptTemplate.findOneAndUpdate(
       { templateId },
       { $set: data },

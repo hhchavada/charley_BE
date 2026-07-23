@@ -89,10 +89,10 @@ export class ResultBuilder implements IResultBuilder {
     // 4. Build Statistics
     const statistics = {
       grantsEvaluated: metrics.totalGrants,
-      rulesEvaluated: 0, // Placeholder, engine would need to pass this up
-      passedRules: 0, 
-      failedRules: 0,
-      missingRules: missingData?.statistics?.totalMissingRules || 0,
+      rulesEvaluated: (metrics as any).rulesEvaluated || 0,
+      passedRules: (metrics as any).passedRules || 0, 
+      failedRules: (metrics as any).failedRules || 0,
+      missingRules: (metrics as any).missingRules || (missingData?.statistics?.totalMissingRules || 0),
       executionTime: metrics.executionTimeMs,
       rankingTime: 0, // Passed from RankingEngine later if needed
       resultBuildTime: performance.now() - startTime

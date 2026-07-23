@@ -1,7 +1,7 @@
 import { GrantEvaluator } from '../GrantEvaluator';
 import { RuleGroupEvaluator } from '../RuleGroupEvaluator';
 import { EvaluationState, GrantState, RuleGroupEvaluationResult } from '../../interfaces';
-import { GrantGraph } from '../../../config/interfaces';
+import { GrantGraph } from '../../config/interfaces';
 
 describe('GrantEvaluator', () => {
   const createMockGrant = (id: string, name: string): GrantGraph => ({

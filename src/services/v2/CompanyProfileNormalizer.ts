@@ -10,9 +10,9 @@ export class CompanyProfileNormalizer {
     }
     const dynamicAnswers = normalized.dynamicAnswers;
 
-    // Helper to safely set a value only if it doesn't already exist in frontend payload
-    const appendIfNotExists = (key: string, value: any) => {
-      if (dynamicAnswers[key] === undefined && value !== undefined && value !== null && value !== 'na') {
+    // Helper to safely set a value. We unconditionally assign it because ACRA is authoritative.
+    const assignAuthoritative = (key: string, value: any) => {
+      if (value !== undefined && value !== null && value !== 'na') {
         dynamicAnswers[key] = value;
       }
     };
@@ -26,7 +26,7 @@ export class CompanyProfileNormalizer {
         months -= incDate.getMonth();
         months += today.getMonth();
         if (months < 0) months = 0;
-        appendIfNotExists('companyAgeMonths', months);
+        assignAuthoritative('companyAgeMonths', months);
       }
     }
 
@@ -34,45 +34,45 @@ export class CompanyProfileNormalizer {
     if (payload.entity_status_description) {
       const status = payload.entity_status_description.toLowerCase();
       const isActive = status.includes('live') || status.includes('registered') || status.includes('active');
-      appendIfNotExists('companyActive', isActive);
+      assignAuthoritative('companyActive', isActive);
     }
 
     // 3. primary_ssic_code -> industryCode
     if (payload.primary_ssic_code) {
-      appendIfNotExists('industryCode', payload.primary_ssic_code);
+      assignAuthoritative('industryCode', payload.primary_ssic_code);
     }
 
     // 4. primary_ssic_description -> industryDescription
     if (payload.primary_ssic_description) {
-      appendIfNotExists('industryDescription', payload.primary_ssic_description);
+      assignAuthoritative('industryDescription', payload.primary_ssic_description);
     }
 
     // 5. entity_type_description -> entityType
     if (payload.entity_type_description) {
-      appendIfNotExists('entityType', payload.entity_type_description);
+      assignAuthoritative('entityType', payload.entity_type_description);
     }
 
     // 6. business_constitution_description -> businessConstitution
     if (payload.business_constitution_description) {
-      appendIfNotExists('businessConstitution', payload.business_constitution_description);
+      assignAuthoritative('businessConstitution', payload.business_constitution_description);
     }
 
     // 7. company_type_description -> companyTypeFromAcra
     if (payload.company_type_description) {
-      appendIfNotExists('companyTypeFromAcra', payload.company_type_description);
+      assignAuthoritative('companyTypeFromAcra', payload.company_type_description);
     }
 
     // 8. no_of_officers -> numberOfOfficers
     if (payload.no_of_officers && payload.no_of_officers !== 'na') {
       const num = Number(payload.no_of_officers);
       if (!isNaN(num)) {
-        appendIfNotExists('numberOfOfficers', num);
+        assignAuthoritative('numberOfOfficers', num);
       }
     }
 
     // 9. postal_code -> postalCode
     if (payload.postal_code) {
-      appendIfNotExists('postalCode', payload.postal_code);
+      assignAuthoritative('postalCode', payload.postal_code);
     }
 
     // 10. block, street, building, unit -> registeredAddress
@@ -86,7 +86,7 @@ export class CompanyProfileNormalizer {
     if (payload.postal_code && payload.postal_code !== 'na') addrParts.push(`Singapore ${payload.postal_code}`);
 
     if (addrParts.length > 0) {
-      appendIfNotExists('registeredAddress', addrParts.join(', '));
+      assignAuthoritative('registeredAddress', addrParts.join(', '));
     }
 
     // 11. Determine eligibleSector for EEG based on SSIC
@@ -101,7 +101,7 @@ export class CompanyProfileNormalizer {
           isEligibleSector = true;
         }
       }
-      appendIfNotExists('eligibleSector', isEligibleSector);
+      assignAuthoritative('eligibleSector', isEligibleSector);
     }
 
     normalized.dynamicAnswers = dynamicAnswers;

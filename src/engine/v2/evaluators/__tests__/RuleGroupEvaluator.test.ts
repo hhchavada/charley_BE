@@ -1,7 +1,7 @@
 import { RuleGroupEvaluator } from '../RuleGroupEvaluator';
 import { RuleEvaluator } from '../RuleEvaluator';
 import { EvaluationState } from '../../interfaces';
-import { RuleGroupGraph, RuleGraph } from '../../../config/interfaces';
+import { RuleGroupGraph, RuleGraph } from '../../config/interfaces';
 import { EngineError } from '../../errors/EngineError';
 
 describe('RuleGroupEvaluator', () => {

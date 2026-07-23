@@ -48,7 +48,7 @@ export class AssessmentController {
 
   public submitAnswers = async (req: Request, res: Response): Promise<void> => {
     try {
-      const sessionId = req.params.sessionId;
+      const sessionId = (req.params.sessionId as string);
       const requestDto: AnswerRequest = req.body;
 
       if (!requestDto.answers) {
@@ -59,7 +59,7 @@ export class AssessmentController {
       await this.assessmentService.submitAnswers(sessionId, requestDto);
       
       // Trigger the existing evaluation pipeline
-      const finalResponse = await this.assessmentService.evaluate(sessionId);
+      const finalResponse = await this.assessmentService.evaluate(sessionId as string);
       
       const questions = finalResponse.evaluation?.questions || [];
       const nextQuestion = questions.length > 0 ? questions[0] : null;
@@ -87,7 +87,7 @@ export class AssessmentController {
   public evaluate = async (req: Request, res: Response): Promise<void> => {
     try {
       const sessionId = req.params.sessionId;
-      const response = await this.assessmentService.evaluate(sessionId);
+      const response = await this.assessmentService.evaluate(sessionId as string);
       res.status(200).json(response);
     } catch (error: any) {
       res.status(500).json({ error: error.message });
@@ -97,7 +97,7 @@ export class AssessmentController {
   public getAssessment = async (req: Request, res: Response): Promise<void> => {
     try {
       const sessionId = req.params.sessionId;
-      const response = await this.assessmentService.getAssessment(sessionId);
+      const response = await this.assessmentService.getAssessment(sessionId as string);
       res.status(200).json(response);
     } catch (error: any) {
       res.status(404).json({ error: 'Session not found or error loading session.' });

@@ -1,6 +1,6 @@
 import { ResultBuilder } from '../ResultBuilder';
-import { EvaluationContext, GrantState, RankingResult, GrantEvaluationResult } from '../../../interfaces/execution';
-import { EngineMetrics } from '../../../interfaces/dependencies';
+import { EvaluationContext, GrantState, RankingResult, GrantEvaluationResult } from '../../interfaces/execution';
+import { EngineMetrics } from '../../interfaces/dependencies';
 
 describe('ResultBuilder', () => {
   const builder = new ResultBuilder();

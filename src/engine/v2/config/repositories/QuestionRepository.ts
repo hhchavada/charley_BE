@@ -10,7 +10,7 @@ export class QuestionRepository {
     return Question.findOne({ questionId: id }).lean<QuestionDTO>();
   }
 
-  static async upsert(questionId: string, data: Partial<QuestionDTO>): Promise<QuestionDTO> {
+  static async upsert(questionId: string, data: Partial<QuestionDTO>): Promise<QuestionDTO | null> {
     return Question.findOneAndUpdate(
       { questionId },
       { $set: data },

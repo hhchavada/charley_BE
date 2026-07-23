@@ -1,4 +1,4 @@
-import { ConfigurationBundle, GrantGraph } from '../../config/interfaces';
+import { ConfigurationBundle, GrantGraph } from '../config/interfaces';
 import { 
   EvaluationContext, 
   GrantEvaluationResult, 

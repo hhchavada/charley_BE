@@ -10,7 +10,7 @@ export class GrantRepository {
     return Grant.findOne({ grantId: id }).lean<GrantDTO>();
   }
 
-  static async upsert(grantId: string, data: Partial<GrantDTO>): Promise<GrantDTO> {
+  static async upsert(grantId: string, data: Partial<GrantDTO>): Promise<GrantDTO | null> {
     return Grant.findOneAndUpdate(
       { grantId },
       { $set: data },

@@ -5,7 +5,7 @@ import {
   RuleGroupEvaluationResult, 
   EvaluationContext
 } from '../interfaces';
-import { GrantGraph } from '../../config/interfaces';
+import { GrantGraph } from '../config/interfaces';
 import { RuleGroupEvaluator } from './RuleGroupEvaluator';
 
 export class GrantEvaluator {

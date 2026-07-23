@@ -10,7 +10,7 @@ export class ConfigRepository {
     return SystemConfig.findOne({ key }).lean<SystemConfigDTO>();
   }
 
-  static async upsert(key: string, value: any): Promise<SystemConfigDTO> {
+  static async upsert(key: string, value: any): Promise<SystemConfigDTO | null> {
     return SystemConfig.findOneAndUpdate(
       { key },
       { $set: { value } },

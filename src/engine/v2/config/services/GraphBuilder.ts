@@ -14,7 +14,7 @@ export class GraphBuilder {
 
     // 1. Build Question map (handle followup references if any, though it's complex if circular)
     questions.forEach(q => {
-      questionMap.set(q.questionId, { ...q });
+      questionMap.set(q.questionId, { ...q } as any);
     });
 
     // Handle followups

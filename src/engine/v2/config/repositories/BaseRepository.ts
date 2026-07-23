@@ -1,4 +1,4 @@
-import { Model, Document, FilterQuery } from 'mongoose';
+import { Model, Document, /* FilterQuery */ } from 'mongoose';
 import { AuditLog } from '../../../../models/v2/AuditLog';
 
 export interface PaginatedResult<T> {
@@ -20,10 +20,10 @@ export class BaseRepository<T extends Document, DTO> {
     limit: number = 10,
     search: string = '',
     searchFields: string[] = [],
-    filter: FilterQuery<T> = {},
+    filter: any = {},
     sort: any = { createdAt: -1 }
   ): Promise<PaginatedResult<DTO>> {
-    const query: FilterQuery<T> = { ...filter, deletedAt: null };
+    const query: any = { ...filter, deletedAt: null };
 
     if (search && searchFields.length > 0) {
       query.$or = searchFields.map(field => ({
@@ -48,12 +48,12 @@ export class BaseRepository<T extends Document, DTO> {
   }
 
   async findById(id: string, idField: string = '_id'): Promise<DTO | null> {
-    const query: FilterQuery<T> = { [idField]: id, deletedAt: null } as any;
+    const query: any = { [idField]: id, deletedAt: null } as any;
     return this.model.findOne(query).lean() as unknown as Promise<DTO | null>;
   }
 
   async create(data: Partial<DTO>, adminId: string, idField: string): Promise<DTO> {
-    const doc = await this.model.create(data);
+    const doc = await this.model.create(data as any);
     const dto = doc.toObject() as unknown as DTO;
     
     await this.logAudit(adminId, 'CREATE', (dto as any)[idField] || doc._id.toString(), { newData: dto });
@@ -61,13 +61,13 @@ export class BaseRepository<T extends Document, DTO> {
   }
 
   async update(id: string, data: Partial<DTO>, adminId: string, idField: string = '_id'): Promise<DTO | null> {
-    const query: FilterQuery<T> = { [idField]: id, deletedAt: null } as any;
+    const query: any = { [idField]: id, deletedAt: null } as any;
     const oldDoc = await this.model.findOne(query).lean();
     if (!oldDoc) return null;
 
     const newDoc = await this.model.findOneAndUpdate(
       query,
-      { $set: data },
+      { $set: data as any },
       { new: true }
     ).lean();
 
@@ -79,7 +79,7 @@ export class BaseRepository<T extends Document, DTO> {
   }
 
   async softDelete(id: string, adminId: string, idField: string = '_id'): Promise<boolean> {
-    const query: FilterQuery<T> = { [idField]: id, deletedAt: null } as any;
+    const query: any = { [idField]: id, deletedAt: null } as any;
     const doc = await this.model.findOneAndUpdate(
       query,
       { $set: { deletedAt: new Date() } },

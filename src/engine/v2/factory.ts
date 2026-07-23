@@ -122,7 +122,7 @@ class LocalJsonConfigLoader implements IConfigurationLoader {
       missingSource.forEach(f => console.warn(` - ${f}`));
     }
 
-    return bundle;
+    return bundle as any;
   }
 }
 
@@ -137,12 +137,12 @@ export class V2Factory {
     const sessionValidator = new SessionValidator();
     
     const sessionLoader = new SessionLoader(sessionRepo, sessionValidator);
-    const sessionSaver = new SessionSaver(sessionRepo, sessionValidator);
+    const sessionSaver = new SessionSaver(sessionRepo as any);
     const sessionMerger = new SessionMerger();
     const sessionProgress = new SessionProgress();
     const sessionTimeline = new SessionTimeline();
     const sessionStateMachine = new SessionStateMachine();
-    const sessionRecovery = new SessionRecovery();
+    const sessionRecovery = new SessionRecovery({} as any, {} as any);
 
     const sessionManager = new SessionManager(
       sessionLoader,

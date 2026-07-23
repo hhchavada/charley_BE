@@ -1,5 +1,5 @@
 import { EvaluationState, RuleGroupEvaluationResult, RuleEvaluationResult } from '../interfaces';
-import { RuleGroupGraph } from '../../config/interfaces';
+import { RuleGroupGraph } from '../config/interfaces';
 import { EngineError } from '../errors/EngineError';
 import { RuleEvaluator } from './RuleEvaluator';
 

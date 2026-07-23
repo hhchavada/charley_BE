@@ -9,7 +9,7 @@ import {
   RuleGroupEvaluationResult,
   EvaluationState
 } from '../interfaces/execution';
-import { ConfigurationBundle, RuleGroupGraph, QuestionGraph } from '../../config/interfaces';
+import { ConfigurationBundle, RuleGroupGraph, QuestionGraph } from '../config/interfaces';
 
 export class MissingDataResolver implements IMissingDataResolver {
   

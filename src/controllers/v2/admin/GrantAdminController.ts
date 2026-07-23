@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
-import { BaseRepository } from '../../config/repositories/BaseRepository';
-import { Grant, IGrant } from '../../../../models/v2/Grant';
-import { GrantDTO } from '../../config/dto';
+import { BaseRepository } from '../../../engine/v2/config/repositories/BaseRepository';
+import { Grant, IGrant } from '../../../models/v2/Grant';
+import { GrantDTO } from '../../../engine/v2/config/dto';
 
 const grantRepo = new BaseRepository<IGrant, GrantDTO>(Grant, 'GRANT');
 
@@ -31,7 +31,7 @@ export class GrantAdminController {
 
   static async getGrant(req: Request, res: Response) {
     try {
-      const grant = await grantRepo.findById(req.params.id, 'grantId');
+      const grant = await grantRepo.findById((req.params.id as string), 'grantId');
       if (!grant) return res.status(404).json({ error: 'Grant not found' });
       res.json(grant);
     } catch (error: any) {
@@ -52,7 +52,7 @@ export class GrantAdminController {
   static async updateGrant(req: Request, res: Response) {
     try {
       const adminId = req.headers['x-admin-id'] as string || 'system';
-      const grant = await grantRepo.update(req.params.id, req.body, adminId, 'grantId');
+      const grant = await grantRepo.update((req.params.id as string), req.body, adminId, 'grantId');
       if (!grant) return res.status(404).json({ error: 'Grant not found' });
       res.json(grant);
     } catch (error: any) {
@@ -63,7 +63,7 @@ export class GrantAdminController {
   static async deleteGrant(req: Request, res: Response) {
     try {
       const adminId = req.headers['x-admin-id'] as string || 'system';
-      const success = await grantRepo.softDelete(req.params.id, adminId, 'grantId');
+      const success = await grantRepo.softDelete((req.params.id as string), adminId, 'grantId');
       if (!success) return res.status(404).json({ error: 'Grant not found' });
       res.json({ success: true });
     } catch (error: any) {
@@ -74,7 +74,7 @@ export class GrantAdminController {
   static async cloneGrant(req: Request, res: Response) {
     try {
       const adminId = req.headers['x-admin-id'] as string || 'system';
-      const grant = await grantRepo.findById(req.params.id, 'grantId');
+      const grant = await grantRepo.findById((req.params.id as string), 'grantId');
       if (!grant) return res.status(404).json({ error: 'Grant not found' });
 
       // Strip IDs and specific metadata
@@ -84,9 +84,9 @@ export class GrantAdminController {
         name: `${grant.name} (Clone)`,
         status: 'DRAFT' as any
       };
-      delete cloneData._id;
-      delete cloneData.createdAt;
-      delete cloneData.updatedAt;
+      delete (cloneData as any)._id;
+      delete (cloneData as any).createdAt;
+      delete (cloneData as any).updatedAt;
 
       const newGrant = await grantRepo.create(cloneData, adminId, 'grantId');
       res.status(201).json(newGrant);

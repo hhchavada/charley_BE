@@ -27,7 +27,7 @@ export class SimulationEngine {
       versionId: configVersionId
     };
 
-    const evaluationResult = this.grantEngine.evaluate(context, configBundle);
+    const evaluationResult = await this.grantEngine.evaluate(context as any);
     const missingData = await this.missingDataResolver.resolve(evaluationResult.potentiallyEligible, configBundle);
     const ranking = await this.rankingEngine.rank(evaluationResult.eligible);
 

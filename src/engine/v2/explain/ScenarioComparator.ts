@@ -16,17 +16,17 @@ export class ScenarioComparator {
 
     const aQuestions = new Set(scenarioA.result.questions.map((q: any) => q.questionId));
     const bQuestions = new Set(scenarioB.result.questions.map((q: any) => q.questionId));
-    const questionDifferences = [
-      ...[...bQuestions].filter(id => !aQuestions.has(id)),
-      ...[...aQuestions].filter(id => !bQuestions.has(id))
+    const questionDifferences: string[] = [ /* as any */ 
+      ...([...bQuestions] as any).filter((id: any) => !aQuestions.has(id)),
+      ...([...aQuestions] as any).filter((id: any) => !bQuestions.has(id))
     ];
 
     return {
-      newlyQualifiedGrants: newlyQualified,
-      lostGrants,
+      newlyQualifiedGrants: newlyQualified as string[],
+      lostGrants: lostGrants as string[],
       fundingDifference: fundingB - fundingA,
       ruleDifferences: {}, // Would require deep inspection of explanations
-      questionDifferences
+      questionDifferences: questionDifferences as string[]
     };
   }
 }

@@ -10,7 +10,7 @@ export class RuleGroupRepository {
     return RuleGroup.findOne({ groupId: id }).lean<RuleGroupDTO>();
   }
 
-  static async upsert(groupId: string, data: Partial<RuleGroupDTO>): Promise<RuleGroupDTO> {
+  static async upsert(groupId: string, data: Partial<RuleGroupDTO>): Promise<RuleGroupDTO | null> {
     return RuleGroup.findOneAndUpdate(
       { groupId },
       { $set: data },

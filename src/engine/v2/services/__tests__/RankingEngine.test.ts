@@ -1,5 +1,5 @@
 import { RankingEngine } from '../RankingEngine';
-import { GrantEvaluationResult, GrantState } from '../../../interfaces/execution';
+import { GrantEvaluationResult, GrantState } from '../../interfaces/execution';
 
 describe('RankingEngine', () => {
   const engine = new RankingEngine();

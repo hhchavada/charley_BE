@@ -1,6 +1,6 @@
 import { MissingDataResolver } from '../MissingDataResolver';
 import { GrantEvaluationResult, EvaluationState } from '../../interfaces/execution';
-import { ConfigurationBundle, GrantGraph, QuestionGraph, RuleGroupGraph, RuleGraph } from '../../../config/interfaces';
+import { ConfigurationBundle, GrantGraph, QuestionGraph, RuleGroupGraph, RuleGraph } from '../../config/interfaces';
 
 describe('MissingDataResolver', () => {
   const resolver = new MissingDataResolver();

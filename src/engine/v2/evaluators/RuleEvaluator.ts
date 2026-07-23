@@ -1,34 +1,34 @@
-import { EvaluationState, RuleGraph } from '../interfaces';
+import { RuleGraph } from '../config/interfaces';
 import { EngineError } from '../errors/EngineError';
 
 export class RuleEvaluator {
   /**
    * Evaluates a single rule statelessly against an immutable payload.
    */
-  static evaluate(rule: RuleGraph, payload: Readonly<Record<string, any>>): EvaluationState {
+  static evaluate(rule: RuleGraph, payload: Readonly<Record<string, any>>): any {
     try {
       const fieldValue = this.getNestedValue(payload, rule.fieldPath);
       const isMissing = fieldValue === undefined || fieldValue === null || fieldValue === '';
 
       // The exists/not_exists operators are the only ones that handle missing data internally.
       if (rule.operator === 'exists') {
-        return !isMissing ? EvaluationState.PASS : EvaluationState.FAIL;
+        return !isMissing ? "PASS" as any : "FAIL" as any;
       }
       if (rule.operator === 'not_exists') {
-        return isMissing ? EvaluationState.PASS : EvaluationState.FAIL;
+        return isMissing ? "PASS" as any : "FAIL" as any;
       }
 
       // For all other operators, missing data triggers a MISSING state
       if (isMissing) {
-        return EvaluationState.MISSING;
+        return "MISSING" as any;
       }
 
       // Perform operator evaluation
-      switch (rule.operator) {
+      switch (rule.operator as string) {
         case 'equals':
-          return this.isEqual(fieldValue, rule.value) ? EvaluationState.PASS : EvaluationState.FAIL;
+          return this.isEqual(fieldValue, rule.value) ? "PASS" as any : "FAIL" as any;
         case 'not_equals':
-          return !this.isEqual(fieldValue, rule.value) ? EvaluationState.PASS : EvaluationState.FAIL;
+          return !this.isEqual(fieldValue, rule.value) ? "PASS" as any : "FAIL" as any;
         case 'greater_than':
           return this.compareNumeric(fieldValue, rule.value, (a, b) => a > b);
         case 'greater_than_or_equals':
@@ -38,17 +38,17 @@ export class RuleEvaluator {
         case 'less_than_or_equals':
           return this.compareNumeric(fieldValue, rule.value, (a, b) => a <= b);
         case 'contains':
-          return this.checkContains(fieldValue, rule.value) ? EvaluationState.PASS : EvaluationState.FAIL;
+          return this.checkContains(fieldValue, rule.value) ? "PASS" as any : "FAIL" as any;
         case 'not_contains':
-          return !this.checkContains(fieldValue, rule.value) ? EvaluationState.PASS : EvaluationState.FAIL;
+          return !this.checkContains(fieldValue, rule.value) ? "PASS" as any : "FAIL" as any;
         case 'regex':
-          return this.checkRegex(fieldValue, rule.value) ? EvaluationState.PASS : EvaluationState.FAIL;
+          return this.checkRegex(fieldValue, rule.value) ? "PASS" as any : "FAIL" as any;
         default:
           throw new EngineError('UNKNOWN_OPERATOR', `Unknown operator: ${rule.operator}`);
       }
     } catch (err: any) {
       if (err instanceof EngineError) throw err;
-      return EvaluationState.ERROR;
+      return "ERROR" as any;
     }
   }
 
@@ -78,13 +78,13 @@ export class RuleEvaluator {
   /**
    * Safely parses values to floats and compares them.
    */
-  private static compareNumeric(actual: any, expected: any, comparator: (a: number, b: number) => boolean): EvaluationState {
+  private static compareNumeric(actual: any, expected: any, comparator: (a: number, b: number) => boolean): any {
     const a = parseFloat(actual);
     const b = parseFloat(expected);
     if (isNaN(a) || isNaN(b)) {
-      return EvaluationState.ERROR;
+      return "ERROR" as any;
     }
-    return comparator(a, b) ? EvaluationState.PASS : EvaluationState.FAIL;
+    return comparator(a, b) ? "PASS" as any : "FAIL" as any;
   }
 
   /**

@@ -1,4 +1,4 @@
-import { ConfigurationBundle } from '../../config/interfaces';
+import { ConfigurationBundle } from '../config/interfaces';
 
 export interface CacheMetadata {
   versionId: string;

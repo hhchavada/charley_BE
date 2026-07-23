@@ -1,4 +1,4 @@
-import { ConfigurationBundle, GrantGraph, QuestionGraph, RuleGraph, RuleGroupGraph } from '../../config/interfaces';
+import { ConfigurationBundle, GrantGraph, QuestionGraph, RuleGraph, RuleGroupGraph } from '../config/interfaces';
 
 // ==========================================
 // 1. STATE MACHINES & ENUMS

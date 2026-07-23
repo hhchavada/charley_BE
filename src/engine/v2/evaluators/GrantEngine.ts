@@ -139,6 +139,16 @@ export class GrantEngine {
     // 11. Call RankingEngine
     const rankingResult = await this.rankingEngine.rank([...eligible, ...potentiallyEligible]);
 
+    let totalMatched = 0;
+    let totalFailed = 0;
+    let totalMissing = 0;
+
+    for (const result of evaluationResults) {
+      totalMatched += result.matchedRulesCount || 0;
+      totalFailed += result.failedRulesCount || 0;
+      totalMissing += result.missingRulesCount || 0;
+    }
+
     const metrics = {
       executionTimeMs: performance.now() - startTime,
       totalGrants: activeGrants.length,
@@ -148,7 +158,11 @@ export class GrantEngine {
       errorCount: errors.length,
       missingQuestionCount: missingData?.questions?.length || 0,
       configurationVersion: versionId,
-      evaluationTimestamp: new Date()
+      evaluationTimestamp: new Date(),
+      rulesEvaluated: totalMatched + totalFailed + totalMissing,
+      passedRules: totalMatched,
+      failedRules: totalFailed,
+      missingRules: totalMissing
     };
 
     // 12. Call ResultBuilder
