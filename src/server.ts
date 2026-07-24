@@ -10,7 +10,7 @@ const MONGODB_URI = process.env.mongodb || process.env.MONGODB_URI;
 if (MONGODB_URI) {
   mongoose.connect(MONGODB_URI)
     .then(() => console.log('Connected to MongoDB successfully'))
-    .catch((err) => console.error('MongoDB connection error:', err));
+    .catch(() => console.warn('⚠️ MongoDB connection failed (Database not running locally). Application will continue without DB.'));
 } else {
   console.warn('WARNING: No MongoDB URI found in environment variables.');
 }

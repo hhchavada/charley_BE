@@ -5,18 +5,16 @@ export const searchCompanies = async (query: string): Promise<Partial<ICompany>[
     return [];
   }
   
-  // DB is not needed right now, returning empty array to avoid MongoDB timeout error
-  return [];
-
-  /* Original DB Logic
+  // Create a regex for case-insensitive search
   const regex = new RegExp(query.trim(), 'i');
+
   const companies = await Company.find({ entityName: regex })
     .select('uen entityName entityStatusDescription entityTypeDescription -_id')
     .sort({ entityName: 1 })
     .limit(10)
     .lean();
+
   return companies;
-  */
 };
 
 export const findCompanyByUEN = async (uen: string): Promise<ICompany | null> => {
@@ -24,11 +22,6 @@ export const findCompanyByUEN = async (uen: string): Promise<ICompany | null> =>
     return null;
   }
 
-  // DB is not needed right now, returning null to avoid MongoDB timeout error
-  return null;
-
-  /* Original DB Logic
   const company = await Company.findOne({ uen: uen.trim().toUpperCase() }).lean();
   return company as unknown as ICompany;
-  */
 };
