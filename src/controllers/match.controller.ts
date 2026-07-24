@@ -15,7 +15,18 @@ export const matchGrants = (req: Request, res: Response) => {
     }
 
     // Validation Phase
-    const questionsFilePath = path.join(__dirname, '../data/questions.json');
+    const paths = [
+      path.join(__dirname, '../data/questions.json'),
+      path.join(__dirname, '../../src/data/questions.json'),
+      path.join(process.cwd(), 'src/data/questions.json')
+    ];
+    let questionsFilePath = paths[0];
+    for (const p of paths) {
+      if (fs.existsSync(p)) {
+        questionsFilePath = p;
+        break;
+      }
+    }
     const questionsData = JSON.parse(fs.readFileSync(questionsFilePath, 'utf-8'));
     
     const validationResult = ValidationEngine.validate(companyData, questionsData);

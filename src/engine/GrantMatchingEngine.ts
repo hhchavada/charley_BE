@@ -8,7 +8,18 @@ export class GrantMatchingEngine {
   private grants: Grant[];
 
   constructor() {
-    const grantsFilePath = path.join(__dirname, '../data/grants.json');
+    const paths = [
+      path.join(__dirname, '../data/grants.json'),
+      path.join(__dirname, '../../src/data/grants.json'),
+      path.join(process.cwd(), 'src/data/grants.json')
+    ];
+    let grantsFilePath = paths[0];
+    for (const p of paths) {
+      if (fs.existsSync(p)) {
+        grantsFilePath = p;
+        break;
+      }
+    }
     const data = fs.readFileSync(grantsFilePath, 'utf-8');
     this.grants = JSON.parse(data);
   }

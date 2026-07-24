@@ -54,11 +54,7 @@ export class SessionManager {
       throw new Error('Cannot save answers to session in current state.');
     }
 
-    console.log('3. existing session.payload:', JSON.stringify(session.payload, null, 2));
-    
     session.payload = this.merger.merge(session.payload, answers);
-    
-    console.log('4. merged payload AFTER SessionMerger.merge():', JSON.stringify(session.payload, null, 2));
     
     this.timeline.addEvent(session, 'ANSWER_SUBMITTED', { updatedKeys: Object.keys(answers) });
 

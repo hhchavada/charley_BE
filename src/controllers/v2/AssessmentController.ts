@@ -56,10 +56,6 @@ export class AssessmentController {
         return;
       }
 
-      console.log('--- submitAnswers() ---');
-      console.log('1. Raw HTTP request body:', JSON.stringify(req.body, null, 2));
-      console.log('2. newAnswers:', JSON.stringify(requestDto.answers, null, 2));
-
       await this.assessmentService.submitAnswers(sessionId, requestDto);
       
       // Trigger the existing evaluation pipeline

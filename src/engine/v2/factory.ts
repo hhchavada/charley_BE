@@ -23,8 +23,20 @@ import { CompanyProfileNormalizer } from '../../services/v2/CompanyProfileNormal
 
 class LocalJsonConfigLoader implements IConfigurationLoader {
   async loadActiveConfiguration(versionId?: string): Promise<ConfigurationBundle> {
-    const grantsFilePath = path.join(__dirname, '../../data/grants.json');
-    const questionsFilePath = path.join(__dirname, '../../data/questions.json');
+    const findDataFile = (filename: string) => {
+      const paths = [
+        path.join(__dirname, '../../data', filename), // Local tsx
+        path.join(__dirname, '../../../src/data', filename), // dist/ running
+        path.join(process.cwd(), 'src/data', filename) // Fallback
+      ];
+      for (const p of paths) {
+        if (fs.existsSync(p)) return p;
+      }
+      throw new Error(`Could not find ${filename} in expected locations.`);
+    };
+
+    const grantsFilePath = findDataFile('grants.json');
+    const questionsFilePath = findDataFile('questions.json');
     
     const rawGrants = JSON.parse(fs.readFileSync(grantsFilePath, 'utf-8'));
     const rawQuestions = JSON.parse(fs.readFileSync(questionsFilePath, 'utf-8'));

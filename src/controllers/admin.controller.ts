@@ -2,8 +2,20 @@ import { Request, Response } from 'express';
 import fs from 'fs';
 import path from 'path';
 
-const GRANTS_PATH = path.join(__dirname, '../data/grants.json');
-const QUESTIONS_PATH = path.join(__dirname, '../data/questions.json');
+const resolveDataPath = (filename: string) => {
+  const paths = [
+    path.join(__dirname, '../data', filename),
+    path.join(__dirname, '../../src/data', filename),
+    path.join(process.cwd(), 'src/data', filename)
+  ];
+  for (const p of paths) {
+    if (fs.existsSync(p)) return p;
+  }
+  return paths[0]; // fallback
+};
+
+const GRANTS_PATH = resolveDataPath('grants.json');
+const QUESTIONS_PATH = resolveDataPath('questions.json');
 
 export const getGrants = (req: Request, res: Response) => {
   try {

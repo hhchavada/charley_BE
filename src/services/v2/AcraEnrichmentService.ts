@@ -9,8 +9,21 @@ export class AcraEnrichmentService {
     if (this.isLoaded) return;
     
     try {
-      const dataPath = path.join(__dirname, '../../../data/acra/corporate-entities.json');
-      if (fs.existsSync(dataPath)) {
+      const paths = [
+        path.join(__dirname, '../../../data/acra/corporate-entities.json'), // Local src/services/v2
+        path.join(__dirname, '../../../../src/data/acra/corporate-entities.json'), // dist/services/v2
+        path.join(process.cwd(), 'src/data/acra/corporate-entities.json') // Fallback
+      ];
+
+      let dataPath = null;
+      for (const p of paths) {
+        if (fs.existsSync(p)) {
+          dataPath = p;
+          break;
+        }
+      }
+
+      if (dataPath) {
         const rawData = fs.readFileSync(dataPath, 'utf8');
         const json = JSON.parse(rawData);
         
