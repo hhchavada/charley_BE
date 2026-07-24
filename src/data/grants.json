@@ -29,16 +29,6 @@
             "field": "initialData.purpose",
             "operator": "contains",
             "value": "Entering New Markets"
-          },
-          {
-            "field": "dynamicAnswers.projectType",
-            "operator": "equals",
-            "value": "Brand & Marketing"
-          },
-          {
-            "field": "dynamicAnswers.planningMarketing",
-            "operator": "equals",
-            "value": "Yes"
           }
         ]
       },
@@ -69,8 +59,8 @@
       },
       {
         "field": "dynamicAnswers.investorCapital",
-        "operator": "exists",
-        "value": ""
+        "operator": "not_equals",
+        "value": "dummy_not_exists"
       },
       {
         "field": "dynamicAnswers.projectStarted",
@@ -144,11 +134,6 @@
             "field": "initialData.purpose",
             "operator": "contains",
             "value": "Developing New Products"
-          },
-          {
-            "field": "dynamicAnswers.projectType",
-            "operator": "equals",
-            "value": "Business Strategy"
           }
         ]
       },
@@ -179,8 +164,8 @@
       },
       {
         "field": "dynamicAnswers.investorCapital",
-        "operator": "exists",
-        "value": ""
+        "operator": "not_equals",
+        "value": "dummy_not_exists"
       },
       {
         "field": "dynamicAnswers.projectStarted",
@@ -237,18 +222,13 @@
             "field": "initialData.purpose",
             "operator": "contains",
             "value": "Entering New Markets"
-          },
-          {
-            "field": "dynamicAnswers.planningOverseas",
-            "operator": "equals",
-            "value": "Yes"
           }
         ]
       },
       {
         "field": "dynamicAnswers.targetMarket",
-        "operator": "exists",
-        "value": ""
+        "operator": "not_equals",
+        "value": "dummy_not_exists"
       },
       {
         "field": "dynamicAnswers.newMarket",
@@ -294,6 +274,26 @@
       "Productivity"
     ],
     "conditions": [
+      {
+        "condition": "OR",
+        "rules": [
+          {
+            "field": "initialData.purpose",
+            "operator": "contains",
+            "value": "Digital Transformation"
+          },
+          {
+            "field": "initialData.purpose",
+            "operator": "contains",
+            "value": "Technology Adoption"
+          },
+          {
+            "field": "initialData.purpose",
+            "operator": "contains",
+            "value": "Improving Productivity"
+          }
+        ]
+      },
       {
         "condition": "OR",
         "rules": [
@@ -357,6 +357,16 @@
       "Tactical"
     ],
     "conditions": [
+      {
+        "condition": "OR",
+        "rules": [
+          {
+            "field": "initialData.purpose",
+            "operator": "contains",
+            "value": "Business Growth"
+          }
+        ]
+      },
       {
         "condition": "OR",
         "rules": [
@@ -427,11 +437,6 @@
             "field": "initialData.purpose",
             "operator": "contains",
             "value": "Finding Skilled Employees"
-          },
-          {
-            "field": "dynamicAnswers.planningHiring",
-            "operator": "equals",
-            "value": "Yes"
           }
         ]
       },
@@ -489,11 +494,6 @@
             "field": "initialData.purpose",
             "operator": "contains",
             "value": "Finding Skilled Employees"
-          },
-          {
-            "field": "dynamicAnswers.planningHiring",
-            "operator": "equals",
-            "value": "Yes"
           }
         ]
       },
@@ -557,11 +557,6 @@
             "field": "initialData.purpose",
             "operator": "contains",
             "value": "Finding Skilled Employees"
-          },
-          {
-            "field": "dynamicAnswers.planningHiring",
-            "operator": "equals",
-            "value": "Yes"
           }
         ]
       },
@@ -611,6 +606,16 @@
       "HR"
     ],
     "conditions": [
+      {
+        "condition": "OR",
+        "rules": [
+          {
+            "field": "initialData.purpose",
+            "operator": "contains",
+            "value": "Finding Skilled Employees"
+          }
+        ]
+      },
       {
         "condition": "OR",
         "rules": [
@@ -677,6 +682,16 @@
             "field": "initialData.purpose",
             "operator": "contains",
             "value": "Finding Skilled Employees"
+          }
+        ]
+      },
+      {
+        "condition": "OR",
+        "rules": [
+          {
+            "field": "initialData.purpose",
+            "operator": "contains",
+            "value": "Finding Skilled Employees"
           },
           {
             "field": "initialData.purpose",
@@ -729,6 +744,16 @@
       "HR"
     ],
     "conditions": [
+      {
+        "condition": "OR",
+        "rules": [
+          {
+            "field": "initialData.purpose",
+            "operator": "contains",
+            "value": "Finding Skilled Employees"
+          }
+        ]
+      },
       {
         "condition": "OR",
         "rules": [
@@ -789,18 +814,7 @@
     "conditions": [
       {
         "condition": "OR",
-        "rules": [
-          {
-            "field": "companyProfile.companyAgeMonths",
-            "operator": "<=",
-            "value": 12
-          },
-          {
-            "field": "dynamicAnswers.companyAgeMonths",
-            "operator": "<=",
-            "value": 12
-          }
-        ]
+        "rules": []
       },
       {
         "field": "dynamicAnswers.companyAgeMonths",
@@ -835,6 +849,26 @@
       "Equipment"
     ],
     "conditions": [
+      {
+        "condition": "OR",
+        "rules": [
+          {
+            "field": "initialData.purpose",
+            "operator": "contains",
+            "value": "Digital Transformation"
+          },
+          {
+            "field": "initialData.purpose",
+            "operator": "contains",
+            "value": "Technology Adoption"
+          },
+          {
+            "field": "initialData.purpose",
+            "operator": "contains",
+            "value": "Improving Productivity"
+          }
+        ]
+      },
       {
         "condition": "OR",
         "rules": [
@@ -915,6 +949,26 @@
             "value": "Technology Adoption"
           },
           {
+            "field": "initialData.purpose",
+            "operator": "contains",
+            "value": "Improving Productivity"
+          }
+        ]
+      },
+      {
+        "condition": "OR",
+        "rules": [
+          {
+            "field": "initialData.purpose",
+            "operator": "contains",
+            "value": "Digital Transformation"
+          },
+          {
+            "field": "initialData.purpose",
+            "operator": "contains",
+            "value": "Technology Adoption"
+          },
+          {
             "field": "dynamicAnswers.planningAdvancedDigital",
             "operator": "equals",
             "value": "Yes"
@@ -948,6 +1002,26 @@
       "Innovation"
     ],
     "conditions": [
+      {
+        "condition": "OR",
+        "rules": [
+          {
+            "field": "initialData.purpose",
+            "operator": "contains",
+            "value": "Digital Transformation"
+          },
+          {
+            "field": "initialData.purpose",
+            "operator": "contains",
+            "value": "Technology Adoption"
+          },
+          {
+            "field": "initialData.purpose",
+            "operator": "contains",
+            "value": "Improving Productivity"
+          }
+        ]
+      },
       {
         "condition": "OR",
         "rules": [
@@ -998,6 +1072,16 @@
       "Transformation"
     ],
     "conditions": [
+      {
+        "condition": "OR",
+        "rules": [
+          {
+            "field": "initialData.purpose",
+            "operator": "contains",
+            "value": "Business Growth"
+          }
+        ]
+      },
       {
         "condition": "OR",
         "rules": [
@@ -1058,16 +1142,6 @@
             "field": "initialData.purpose",
             "operator": "contains",
             "value": "Finding Skilled Employees"
-          },
-          {
-            "field": "dynamicAnswers.projectType",
-            "operator": "equals",
-            "value": "Human Capital Development"
-          },
-          {
-            "field": "dynamicAnswers.planningHiring",
-            "operator": "equals",
-            "value": "Yes"
           }
         ]
       },
@@ -1098,8 +1172,8 @@
       },
       {
         "field": "dynamicAnswers.investorCapital",
-        "operator": "exists",
-        "value": ""
+        "operator": "not_equals",
+        "value": "dummy_not_exists"
       },
       {
         "field": "dynamicAnswers.projectStarted",
@@ -1156,11 +1230,6 @@
             "field": "initialData.purpose",
             "operator": "contains",
             "value": "High Operating Costs"
-          },
-          {
-            "field": "dynamicAnswers.projectType",
-            "operator": "equals",
-            "value": "Financial Management"
           }
         ]
       },
@@ -1191,8 +1260,8 @@
       },
       {
         "field": "dynamicAnswers.investorCapital",
-        "operator": "exists",
-        "value": ""
+        "operator": "not_equals",
+        "value": "dummy_not_exists"
       },
       {
         "field": "dynamicAnswers.projectStarted",
@@ -1254,11 +1323,6 @@
             "field": "initialData.purpose",
             "operator": "contains",
             "value": "High Operating Costs"
-          },
-          {
-            "field": "dynamicAnswers.projectType",
-            "operator": "equals",
-            "value": "Process Redesign"
           }
         ]
       },
@@ -1289,8 +1353,8 @@
       },
       {
         "field": "dynamicAnswers.investorCapital",
-        "operator": "exists",
-        "value": ""
+        "operator": "not_equals",
+        "value": "dummy_not_exists"
       },
       {
         "field": "dynamicAnswers.projectStarted",

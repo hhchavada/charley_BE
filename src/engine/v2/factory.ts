@@ -41,41 +41,55 @@ class LocalJsonConfigLoader implements IConfigurationLoader {
     const questions: QuestionGraph[] = rawQuestions.map(mapQuestion);
 
     const grants: GrantGraph[] = rawGrants.map((g: any) => {
-      const rules: RuleGraph[] = (g.conditions || []).map((c: any, i: number) => {
-        const opMap: Record<string, string> = {
-          '<': 'less_than',
-          '>': 'greater_than',
-          '<=': 'less_than_or_equals',
-          '>=': 'greater_than_or_equals',
-          '=': 'equals',
-          '==': 'equals',
-          '===': 'equals'
-        };
-        const mappedOp = opMap[c.operator] || c.operator;
-
-        const ruleGraph: any = {
-          ruleId: `${g.id}-rule-${i}`,
-          fieldPath: c.field,
-          operator: mappedOp,
-          value: c.value,
-          errorMessage: c.expectedMessage
-        };
-        // Restore mapping: link rule to question via field name
-        const matchingQuestion = questionMap.get(c.field);
-        if (matchingQuestion) {
-          ruleGraph.question = matchingQuestion;
-        }
+      
+      const parseConditions = (conditions: any[], parentId: string): { rules: RuleGraph[], nestedGroups: any[] } => {
+        const rules: RuleGraph[] = [];
+        const nestedGroups: any[] = [];
         
-        return ruleGraph;
-      });
+        conditions.forEach((c: any, i: number) => {
+          if (c.condition === 'AND' || c.condition === 'OR') {
+            const sub = parseConditions(c.rules || [], `${parentId}-group-${i}`);
+            nestedGroups.push({
+              groupId: `${parentId}-group-${i}`,
+              logic: c.condition,
+              rules: sub.rules,
+              nestedGroups: sub.nestedGroups
+            });
+          } else {
+            const opMap: Record<string, string> = {
+              '<': 'less_than', '>': 'greater_than', '<=': 'less_than_or_equals', '>=': 'greater_than_or_equals',
+              '=': 'equals', '==': 'equals', '===': 'equals'
+            };
+            const mappedOp = opMap[c.operator] || c.operator;
+
+            const ruleGraph: any = {
+              ruleId: `${parentId}-rule-${i}`,
+              fieldPath: c.field,
+              operator: mappedOp,
+              value: c.value,
+              errorMessage: c.expectedMessage
+            };
+            // Restore mapping: link rule to question via field name
+            const matchingQuestion = questionMap.get(c.field);
+            if (matchingQuestion) {
+              ruleGraph.question = matchingQuestion;
+            }
+            rules.push(ruleGraph);
+          }
+        });
+        
+        return { rules, nestedGroups };
+      };
+
+      const parsedRoot = parseConditions(g.conditions || [], g.id);
       
       return {
         ...g,
         ruleGroup: {
           groupId: `${g.id}-root-group`,
-          condition: 'AND',
-          rules,
-          nestedGroups: []
+          logic: 'AND',
+          rules: parsedRoot.rules,
+          nestedGroups: parsedRoot.nestedGroups
         }
       };
     });

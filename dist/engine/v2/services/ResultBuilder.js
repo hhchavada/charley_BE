@@ -87,8 +87,8 @@ class ResultBuilder {
                 version: context.versionId
             },
             summary: {
-                totalEligible: eligible.length,
-                totalPotential: potentiallyEligible.length,
+                totalEligible: readyNow.length + prepareNext.length,
+                totalPotential: needsInfo.length,
                 totalPrepareNext: prepareNext.length,
                 totalHidden: hidden.length,
                 totalRejected: rejected.length,

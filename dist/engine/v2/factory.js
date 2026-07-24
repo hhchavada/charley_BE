@@ -42,38 +42,50 @@ class LocalJsonConfigLoader {
         };
         const questions = rawQuestions.map(mapQuestion);
         const grants = rawGrants.map((g) => {
-            const rules = (g.conditions || []).map((c, i) => {
-                const opMap = {
-                    '<': 'less_than',
-                    '>': 'greater_than',
-                    '<=': 'less_than_or_equals',
-                    '>=': 'greater_than_or_equals',
-                    '=': 'equals',
-                    '==': 'equals',
-                    '===': 'equals'
-                };
-                const mappedOp = opMap[c.operator] || c.operator;
-                const ruleGraph = {
-                    ruleId: `${g.id}-rule-${i}`,
-                    fieldPath: c.field,
-                    operator: mappedOp,
-                    value: c.value,
-                    errorMessage: c.expectedMessage
-                };
-                // Restore mapping: link rule to question via field name
-                const matchingQuestion = questionMap.get(c.field);
-                if (matchingQuestion) {
-                    ruleGraph.question = matchingQuestion;
-                }
-                return ruleGraph;
-            });
+            const parseConditions = (conditions, parentId) => {
+                const rules = [];
+                const nestedGroups = [];
+                conditions.forEach((c, i) => {
+                    if (c.condition === 'AND' || c.condition === 'OR') {
+                        const sub = parseConditions(c.rules || [], `${parentId}-group-${i}`);
+                        nestedGroups.push({
+                            groupId: `${parentId}-group-${i}`,
+                            logic: c.condition,
+                            rules: sub.rules,
+                            nestedGroups: sub.nestedGroups
+                        });
+                    }
+                    else {
+                        const opMap = {
+                            '<': 'less_than', '>': 'greater_than', '<=': 'less_than_or_equals', '>=': 'greater_than_or_equals',
+                            '=': 'equals', '==': 'equals', '===': 'equals'
+                        };
+                        const mappedOp = opMap[c.operator] || c.operator;
+                        const ruleGraph = {
+                            ruleId: `${parentId}-rule-${i}`,
+                            fieldPath: c.field,
+                            operator: mappedOp,
+                            value: c.value,
+                            errorMessage: c.expectedMessage
+                        };
+                        // Restore mapping: link rule to question via field name
+                        const matchingQuestion = questionMap.get(c.field);
+                        if (matchingQuestion) {
+                            ruleGraph.question = matchingQuestion;
+                        }
+                        rules.push(ruleGraph);
+                    }
+                });
+                return { rules, nestedGroups };
+            };
+            const parsedRoot = parseConditions(g.conditions || [], g.id);
             return {
                 ...g,
                 ruleGroup: {
                     groupId: `${g.id}-root-group`,
-                    condition: 'AND',
-                    rules,
-                    nestedGroups: []
+                    logic: 'AND',
+                    rules: parsedRoot.rules,
+                    nestedGroups: parsedRoot.nestedGroups
                 }
             };
         });
@@ -99,16 +111,24 @@ class LocalJsonConfigLoader {
         ]);
         const collectedByChat = new Set();
         const missingSource = new Set();
-        grants.forEach(g => {
-            g.ruleGroup.rules.forEach((r) => {
-                const field = r.fieldPath;
+        const collectFields = (node) => {
+            if (!node)
+                return;
+            if (node.rules && Array.isArray(node.rules)) {
+                node.rules.forEach((child) => collectFields(child));
+            }
+            if (node.fieldPath) {
+                const field = node.fieldPath;
                 if (questionMap.has(field)) {
                     collectedByChat.add(field);
                 }
                 else if (!step12Fields.has(field)) {
                     missingSource.add(field);
                 }
-            });
+            }
+        };
+        grants.forEach(g => {
+            collectFields(g.ruleGroup);
         });
         if (missingSource.size > 0) {
             console.warn('⚠️ CONFIGURATION INTEGRITY WARNING ⚠️');

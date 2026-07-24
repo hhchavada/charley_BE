@@ -7,43 +7,69 @@ class RuleEvaluator {
      * Evaluates a single rule statelessly against an immutable payload.
      */
     static evaluate(rule, payload) {
+        if (global.hasLoggedPayload === undefined) {
+            console.log('EXACT PAYLOAD:', JSON.stringify(payload, null, 2));
+            global.hasLoggedPayload = true;
+        }
         try {
             const fieldValue = this.getNestedValue(payload, rule.fieldPath);
             const isMissing = fieldValue === undefined || fieldValue === null || fieldValue === '';
+            let resultState;
             // The exists/not_exists operators are the only ones that handle missing data internally.
             if (rule.operator === 'exists') {
-                return !isMissing ? "PASS" : "FAIL";
+                resultState = !isMissing ? "PASS" : "FAIL";
             }
-            if (rule.operator === 'not_exists') {
-                return isMissing ? "PASS" : "FAIL";
+            else if (rule.operator === 'not_exists') {
+                resultState = isMissing ? "PASS" : "FAIL";
             }
-            // For all other operators, missing data triggers a MISSING state
-            if (isMissing) {
-                return "MISSING";
+            else if (isMissing) {
+                // For all other operators, missing data triggers a MISSING state
+                resultState = "MISSING";
             }
-            // Perform operator evaluation
-            switch (rule.operator) {
-                case 'equals':
-                    return this.isEqual(fieldValue, rule.value) ? "PASS" : "FAIL";
-                case 'not_equals':
-                    return !this.isEqual(fieldValue, rule.value) ? "PASS" : "FAIL";
-                case 'greater_than':
-                    return this.compareNumeric(fieldValue, rule.value, (a, b) => a > b);
-                case 'greater_than_or_equals':
-                    return this.compareNumeric(fieldValue, rule.value, (a, b) => a >= b);
-                case 'less_than':
-                    return this.compareNumeric(fieldValue, rule.value, (a, b) => a < b);
-                case 'less_than_or_equals':
-                    return this.compareNumeric(fieldValue, rule.value, (a, b) => a <= b);
-                case 'contains':
-                    return this.checkContains(fieldValue, rule.value) ? "PASS" : "FAIL";
-                case 'not_contains':
-                    return !this.checkContains(fieldValue, rule.value) ? "PASS" : "FAIL";
-                case 'regex':
-                    return this.checkRegex(fieldValue, rule.value) ? "PASS" : "FAIL";
-                default:
-                    throw new EngineError_1.EngineError('UNKNOWN_OPERATOR', `Unknown operator: ${rule.operator}`);
+            else {
+                // Perform operator evaluation
+                switch (rule.operator) {
+                    case 'equals':
+                        resultState = this.isEqual(fieldValue, rule.value) ? "PASS" : "FAIL";
+                        break;
+                    case 'not_equals':
+                        resultState = !this.isEqual(fieldValue, rule.value) ? "PASS" : "FAIL";
+                        break;
+                    case 'greater_than':
+                        resultState = this.compareNumeric(fieldValue, rule.value, (a, b) => a > b);
+                        break;
+                    case 'greater_than_or_equals':
+                        resultState = this.compareNumeric(fieldValue, rule.value, (a, b) => a >= b);
+                        break;
+                    case 'less_than':
+                        resultState = this.compareNumeric(fieldValue, rule.value, (a, b) => a < b);
+                        break;
+                    case 'less_than_or_equals':
+                        resultState = this.compareNumeric(fieldValue, rule.value, (a, b) => a <= b);
+                        break;
+                    case 'contains':
+                        resultState = this.checkContains(fieldValue, rule.value) ? "PASS" : "FAIL";
+                        break;
+                    case 'not_contains':
+                        resultState = !this.checkContains(fieldValue, rule.value) ? "PASS" : "FAIL";
+                        break;
+                    case 'in':
+                        resultState = this.checkContains(rule.value, fieldValue) ? "PASS" : "FAIL";
+                        break;
+                    case 'not_in':
+                        resultState = !this.checkContains(rule.value, fieldValue) ? "PASS" : "FAIL";
+                        break;
+                    case 'regex':
+                        resultState = this.checkRegex(fieldValue, rule.value) ? "PASS" : "FAIL";
+                        break;
+                    default:
+                        throw new EngineError_1.EngineError('UNKNOWN_OPERATOR', `Unknown operator: ${rule.operator}`);
+                }
             }
+            if (rule.ruleId && rule.ruleId.includes('edg-marketing')) {
+                console.log(`[EVAL] Rule ID: ${rule.ruleId} | fieldPath: ${rule.fieldPath} | runtime value: ${JSON.stringify(fieldValue)} | returned state: ${resultState}`);
+            }
+            return resultState;
         }
         catch (err) {
             if (err instanceof EngineError_1.EngineError)

@@ -44,7 +44,10 @@ class AssessmentService {
             const configBundle = await this.configLoader.loadActiveConfiguration(lockedVersion);
             // 3. Prepare Context
             const context = {
-                payload: session.payload,
+                payload: {
+                    initialData: session.payload,
+                    ...session.payload
+                },
                 sessionId: session.sessionId,
                 versionId: lockedVersion
             };

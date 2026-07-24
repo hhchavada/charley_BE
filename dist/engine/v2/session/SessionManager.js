@@ -45,7 +45,9 @@ class SessionManager {
         if (session.state === interfaces_1.SessionState.NEW || session.state === interfaces_1.SessionState.ARCHIVED) {
             throw new Error('Cannot save answers to session in current state.');
         }
+        console.log('3. existing session.payload:', JSON.stringify(session.payload, null, 2));
         session.payload = this.merger.merge(session.payload, answers);
+        console.log('4. merged payload AFTER SessionMerger.merge():', JSON.stringify(session.payload, null, 2));
         this.timeline.addEvent(session, 'ANSWER_SUBMITTED', { updatedKeys: Object.keys(answers) });
         const targetState = (session.state === interfaces_1.SessionState.AI_REQUIRED || session.state === interfaces_1.SessionState.WAITING_FOR_USER)
             ? interfaces_1.SessionState.READY_FOR_EVALUATION

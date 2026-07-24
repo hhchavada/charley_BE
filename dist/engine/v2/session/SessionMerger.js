@@ -9,9 +9,26 @@ class SessionMerger {
      */
     merge(existingPayload, newAnswers) {
         const merged = { ...existingPayload };
+        const expandedAnswers = {};
         for (const key in newAnswers) {
             if (Object.prototype.hasOwnProperty.call(newAnswers, key)) {
-                const newValue = newAnswers[key];
+                if (key.includes('.')) {
+                    const parts = key.split('.');
+                    let current = expandedAnswers;
+                    for (let i = 0; i < parts.length - 1; i++) {
+                        current[parts[i]] = current[parts[i]] || {};
+                        current = current[parts[i]];
+                    }
+                    current[parts[parts.length - 1]] = newAnswers[key];
+                }
+                else {
+                    expandedAnswers[key] = newAnswers[key];
+                }
+            }
+        }
+        for (const key in expandedAnswers) {
+            if (Object.prototype.hasOwnProperty.call(expandedAnswers, key)) {
+                const newValue = expandedAnswers[key];
                 const existingValue = merged[key];
                 if (this.isPlainObject(newValue) && this.isPlainObject(existingValue)) {
                     // Recursive merge for nested objects

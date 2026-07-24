@@ -27,6 +27,7 @@ export class RankingEngine implements IRankingEngine {
     const hidden: RankedGrantDTO[] = [];
 
     let totalEstimatedFunding = 0;
+    let totalMaximumFunding = 0;
     let mergedCardsCount = 0;
 
     // 1. Convert to RankedGrantDTO and extract metadata
@@ -40,7 +41,7 @@ export class RankingEngine implements IRankingEngine {
         windowStatus: meta.windowStatus || 'OPEN',
         stacksWithOtherGrants: meta.stacksWithOtherGrants || false,
         whyRanked: 'Based on configuration priority.',
-        AIExplanation: 'AI explanation placeholder.'
+        AIExplanation: g.explanation?.reasonSummary || undefined
       };
     });
 
@@ -117,6 +118,21 @@ export class RankingEngine implements IRankingEngine {
         continue;
       }
 
+      // Accumulate funding (EIS rule: stacksWithOtherGrants do not add to total)
+      if (!item.stacksWithOtherGrants) {
+        const estStr = item.grantResult.grant.estimatedFunding;
+        if (estStr) {
+          const num = parseInt(estStr.replace(/[^0-9]/g, ''));
+          if (!isNaN(num)) totalEstimatedFunding += num;
+        }
+
+        const capStr = (item.grantResult.grant as any).officialCap;
+        if (capStr) {
+          const num = parseInt(capStr.replace(/[^0-9]/g, ''));
+          if (!isNaN(num)) totalMaximumFunding += num;
+        }
+      }
+
       if (meta.isPrepareNext) {
         prepareNext.push(item);
         continue;
@@ -128,21 +144,12 @@ export class RankingEngine implements IRankingEngine {
       }
 
       readyNow.push(item);
-
-      // Accumulate funding (EIS rule: stacksWithOtherGrants do not add to total)
-      if (!item.stacksWithOtherGrants) {
-        const estStr = item.grantResult.grant.estimatedFunding;
-        if (estStr) {
-          const num = parseInt(estStr.replace(/[^0-9]/g, ''));
-          if (!isNaN(num)) totalEstimatedFunding += num;
-        }
-      }
     }
 
     // 6. Generate Funding Summary Placeholder (Config Driven)
     const fundingSummary: FundingSummary = {
       estimatedFunding: totalEstimatedFunding,
-      maximumFunding: totalEstimatedFunding * 1.2, // Configurable placeholder
+      maximumFunding: totalMaximumFunding > 0 ? totalMaximumFunding : totalEstimatedFunding * 1.2,
       fundingRange: `$0 - $${totalEstimatedFunding.toLocaleString()}`,
       supportPercentage: 'Up to 70%',
       fundingType: 'Cash / Reimbursement',

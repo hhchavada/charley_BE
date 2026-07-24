@@ -52,7 +52,10 @@ export class AssessmentService {
 
       // 3. Prepare Context
       const context: EvaluationContext = {
-        payload: session.payload,
+        payload: {
+          initialData: session.payload,
+          ...session.payload
+        },
         sessionId: session.sessionId,
         versionId: lockedVersion
       };

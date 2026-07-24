@@ -17,6 +17,7 @@ class RankingEngine {
         const windowClosed = [];
         const hidden = [];
         let totalEstimatedFunding = 0;
+        let totalMaximumFunding = 0;
         let mergedCardsCount = 0;
         // 1. Convert to RankedGrantDTO and extract metadata
         const rawRanked = grants.map(g => {
@@ -29,7 +30,7 @@ class RankingEngine {
                 windowStatus: meta.windowStatus || 'OPEN',
                 stacksWithOtherGrants: meta.stacksWithOtherGrants || false,
                 whyRanked: 'Based on configuration priority.',
-                AIExplanation: 'AI explanation placeholder.'
+                AIExplanation: g.explanation?.reasonSummary || undefined
             };
         });
         // 2. Group by mergeGroup
@@ -97,6 +98,21 @@ class RankingEngine {
                 windowClosed.push(item);
                 continue;
             }
+            // Accumulate funding (EIS rule: stacksWithOtherGrants do not add to total)
+            if (!item.stacksWithOtherGrants) {
+                const estStr = item.grantResult.grant.estimatedFunding;
+                if (estStr) {
+                    const num = parseInt(estStr.replace(/[^0-9]/g, ''));
+                    if (!isNaN(num))
+                        totalEstimatedFunding += num;
+                }
+                const capStr = item.grantResult.grant.officialCap;
+                if (capStr) {
+                    const num = parseInt(capStr.replace(/[^0-9]/g, ''));
+                    if (!isNaN(num))
+                        totalMaximumFunding += num;
+                }
+            }
             if (meta.isPrepareNext) {
                 prepareNext.push(item);
                 continue;
@@ -106,20 +122,11 @@ class RankingEngine {
                 continue;
             }
             readyNow.push(item);
-            // Accumulate funding (EIS rule: stacksWithOtherGrants do not add to total)
-            if (!item.stacksWithOtherGrants) {
-                const estStr = item.grantResult.grant.estimatedFunding;
-                if (estStr) {
-                    const num = parseInt(estStr.replace(/[^0-9]/g, ''));
-                    if (!isNaN(num))
-                        totalEstimatedFunding += num;
-                }
-            }
         }
         // 6. Generate Funding Summary Placeholder (Config Driven)
         const fundingSummary = {
             estimatedFunding: totalEstimatedFunding,
-            maximumFunding: totalEstimatedFunding * 1.2, // Configurable placeholder
+            maximumFunding: totalMaximumFunding > 0 ? totalMaximumFunding : totalEstimatedFunding * 1.2,
             fundingRange: `$0 - $${totalEstimatedFunding.toLocaleString()}`,
             supportPercentage: 'Up to 70%',
             fundingType: 'Cash / Reimbursement',

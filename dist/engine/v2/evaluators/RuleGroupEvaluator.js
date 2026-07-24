@@ -125,6 +125,9 @@ class RuleGroupEvaluator {
             }
         }
         cache.groups.set(group.groupId, overallState);
+        if (group.groupId.includes('edg-marketing')) {
+            console.log(`[GROUP EVAL] Group ID: ${group.groupId} | Logic: ${group.logic} | isAnd: ${isAnd} | hasMissing: ${hasMissing} | hasPass: ${hasPass} | hasFail: ${hasFail} | overallState: ${overallState}`);
+        }
         return {
             groupId: group.groupId,
             state: overallState,

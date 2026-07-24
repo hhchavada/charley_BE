@@ -124,6 +124,7 @@ class GrantEngine {
             totalFailed += result.failedRulesCount || 0;
             totalMissing += result.missingRulesCount || 0;
         }
+        console.log('DEBUG METRICS:', totalMatched, totalFailed, totalMissing);
         const metrics = {
             executionTimeMs: performance.now() - startTime,
             totalGrants: activeGrants.length,

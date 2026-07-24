@@ -48,6 +48,9 @@ class AssessmentController {
                 res.status(400).json({ error: 'answers payload is required' });
                 return;
             }
+            console.log('--- submitAnswers() ---');
+            console.log('1. Raw HTTP request body:', JSON.stringify(req.body, null, 2));
+            console.log('2. newAnswers:', JSON.stringify(requestDto.answers, null, 2));
             await this.assessmentService.submitAnswers(sessionId, requestDto);
             // Trigger the existing evaluation pipeline
             const finalResponse = await this.assessmentService.evaluate(sessionId);
