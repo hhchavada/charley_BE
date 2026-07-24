@@ -4,12 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "tsx watch src/server.ts",
-    "start": "tsx src/server.ts",
+    "dev": "node init && tsx watch src/server.ts",
+    "start": "node init && tsx src/server.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
     "import:acra": "tsx scripts/import-acra.ts",
     "seed": "tsx src/seeders/v2/index.ts",
-    "build": "tsc"
+    "build": "node init && tsc"
   },
   "keywords": [],
   "author": "",
