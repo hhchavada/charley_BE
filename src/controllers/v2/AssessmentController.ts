@@ -26,7 +26,7 @@ export class AssessmentController {
       if (req.body.initialData) {
         const enrichedData = this.acraService.enrich(req.body.initialData);
         const normalizedData = this.normalizerService.normalize(enrichedData);
-        await this.assessmentService.submitAnswers(response.sessionId, { answers: normalizedData });
+        await this.assessmentService.submitAnswers(response.sessionId, { answers: { initialData: normalizedData } });
       }
 
       // Trigger the existing evaluation pipeline
